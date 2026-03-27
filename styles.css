@@ -362,7 +362,7 @@ p {
 
 .paper-entry {
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: 20px;
   align-items: start;
   padding: 18px 0;
@@ -380,14 +380,20 @@ p {
   justify-items: center;
   gap: 8px;
   aspect-ratio: 4 / 3;
-  min-height: 132px;
-  padding: 14px;
-  border: 1px dashed rgba(36, 131, 255, 0.45);
+  min-height: 150px;
+  padding: 8px;
+  border: 1px solid #d8dee8;
   border-radius: 8px;
   text-align: center;
-  background:
-    linear-gradient(135deg, rgba(36, 131, 255, 0.1), rgba(21, 93, 186, 0.05)),
-    #f8fbff;
+  background: #ffffff;
+}
+
+.paper-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
 }
 
 .paper-figure span {
@@ -404,39 +410,27 @@ p {
 }
 
 .paper-figure-agentic {
-  background:
-    linear-gradient(135deg, rgba(36, 131, 255, 0.12), rgba(112, 157, 238, 0.06)),
-    #f8fbff;
+  background: #ffffff;
 }
 
 .paper-figure-device {
-  background:
-    linear-gradient(135deg, rgba(75, 118, 210, 0.12), rgba(44, 66, 126, 0.05)),
-    #f7f9ff;
+  background: #ffffff;
 }
 
 .paper-figure-organoid {
-  background:
-    linear-gradient(135deg, rgba(130, 170, 214, 0.14), rgba(72, 107, 160, 0.05)),
-    #f8fbff;
+  background: #ffffff;
 }
 
 .paper-figure-materials {
-  background:
-    linear-gradient(135deg, rgba(113, 144, 214, 0.12), rgba(167, 199, 238, 0.08)),
-    #f8fbff;
+  background: #ffffff;
 }
 
 .paper-figure-spatial {
-  background:
-    linear-gradient(135deg, rgba(90, 133, 217, 0.12), rgba(128, 164, 232, 0.08)),
-    #f7faff;
+  background: #ffffff;
 }
 
 .paper-figure-neuron {
-  background:
-    linear-gradient(135deg, rgba(66, 109, 188, 0.12), rgba(150, 184, 238, 0.08)),
-    #f8fbff;
+  background: #ffffff;
 }
 
 .paper-details {
