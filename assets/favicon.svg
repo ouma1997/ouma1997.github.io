@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wenbo Wang">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#204338" />
+      <stop offset="100%" stop-color="#9b6038" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bg)" />
+  <text
+    x="50%"
+    y="53%"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    fill="#fffaf4"
+    font-family="Georgia, serif"
+    font-size="29"
+    font-weight="700"
+    letter-spacing="2"
+  >
+    WW
+  </text>
+</svg>

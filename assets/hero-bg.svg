@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Abstract scientific background">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#09131f"/>
+      <stop offset="45%" stop-color="#123153"/>
+      <stop offset="100%" stop-color="#203d6b"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="30%" cy="25%" r="55%">
+      <stop offset="0%" stop-color="#4f88ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#4f88ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="78%" cy="70%" r="42%">
+      <stop offset="0%" stop-color="#8ab4ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#8ab4ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glowA)"/>
+  <rect width="1600" height="900" fill="url(#glowB)"/>
+
+  <g stroke="#8cb2ff" stroke-width="2" fill="none" opacity="0.26">
+    <path d="M120 610 C270 540, 370 490, 520 500 S790 565, 930 480 S1220 310, 1450 390"/>
+    <path d="M80 220 C210 300, 330 325, 470 280 S760 120, 920 190 S1230 390, 1490 250"/>
+    <path d="M220 760 C420 680, 630 660, 860 720 S1200 840, 1460 760"/>
+    <path d="M300 150 C420 180, 580 245, 720 210 S980 90, 1140 135 S1320 230, 1490 170"/>
+  </g>
+
+  <g fill="#d8e6ff" opacity="0.2">
+    <circle cx="240" cy="210" r="18"/>
+    <circle cx="410" cy="280" r="11"/>
+    <circle cx="520" cy="503" r="16"/>
+    <circle cx="760" cy="205" r="13"/>
+    <circle cx="930" cy="482" r="18"/>
+    <circle cx="1180" cy="332" r="14"/>
+    <circle cx="1290" cy="735" r="20"/>
+    <circle cx="1460" cy="250" r="12"/>
+  </g>
+
+  <g stroke="#d8e6ff" stroke-width="1.5" opacity="0.22">
+    <line x1="240" y1="210" x2="410" y2="280"/>
+    <line x1="410" y1="280" x2="520" y2="503"/>
+    <line x1="520" y1="503" x2="930" y2="482"/>
+    <line x1="930" y1="482" x2="1180" y2="332"/>
+    <line x1="1180" y1="332" x2="1460" y2="250"/>
+    <line x1="760" y1="205" x2="1180" y2="332"/>
+    <line x1="930" y1="482" x2="1290" y2="735"/>
+  </g>
+
+  <g opacity="0.1" stroke="#ffffff" stroke-width="1">
+    <path d="M0 120 H1600"/>
+    <path d="M0 300 H1600"/>
+    <path d="M0 480 H1600"/>
+    <path d="M0 660 H1600"/>
+    <path d="M200 0 V900"/>
+    <path d="M520 0 V900"/>
+    <path d="M840 0 V900"/>
+    <path d="M1160 0 V900"/>
+    <path d="M1480 0 V900"/>
+  </g>
+</svg>
