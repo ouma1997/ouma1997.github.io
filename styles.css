@@ -132,7 +132,7 @@ p {
 
 .hero {
   position: relative;
-  min-height: 75vh;
+  min-height: 38vh;
   padding: 60px 0 0;
   background:
     linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)),
@@ -147,7 +147,7 @@ p {
 .hero-inner {
   position: relative;
   z-index: 1;
-  min-height: calc(75vh - 60px);
+  min-height: calc(38vh - 60px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -204,21 +204,6 @@ p {
 
 .hero-button-secondary {
   background: transparent;
-}
-
-.hero-down {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  color: #ffffff;
-  font-size: 56px;
-  line-height: 1;
-}
-
-.hero-down:hover,
-.hero-down:focus-visible {
-  color: var(--accent-bright);
 }
 
 .section {
@@ -317,10 +302,10 @@ p {
 
 .research-row {
   display: grid;
-  grid-template-columns: minmax(260px, 0.92fr) minmax(320px, 1.08fr);
-  gap: 34px;
+  grid-template-columns: 1fr;
+  gap: 18px;
   align-items: start;
-  margin-bottom: 34px;
+  margin-bottom: 42px;
 }
 
 .research-row:last-of-type {
@@ -328,13 +313,13 @@ p {
 }
 
 .research-copy h3 {
-  display: inline-block;
+  display: block;
   margin-bottom: 14px;
   padding-bottom: 6px;
-  color: #2e46bd;
+  color: #1f3656;
   font-size: 29px;
   line-height: 1.28;
-  border-bottom: 3px solid #2e46bd;
+  border-bottom: 3px solid #1f3656;
 }
 
 .research-number {
@@ -362,16 +347,124 @@ p {
 
 .research-papers ul {
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
 }
 
 .research-papers li {
-  margin-bottom: 16px;
+  margin-bottom: 0;
   line-height: 1.8;
 }
 
 .research-papers li:last-child {
   margin-bottom: 0;
+}
+
+.paper-entry {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+
+.paper-entry:first-child {
+  padding-top: 4px;
+  border-top: 0;
+}
+
+.paper-figure {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  aspect-ratio: 4 / 3;
+  min-height: 132px;
+  padding: 14px;
+  border: 1px dashed rgba(36, 131, 255, 0.45);
+  border-radius: 8px;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(36, 131, 255, 0.1), rgba(21, 93, 186, 0.05)),
+    #f8fbff;
+}
+
+.paper-figure span {
+  color: #1f3656;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.paper-figure small {
+  color: #4a6485;
+  font-size: 13px;
+}
+
+.paper-figure-agentic {
+  background:
+    linear-gradient(135deg, rgba(36, 131, 255, 0.12), rgba(112, 157, 238, 0.06)),
+    #f8fbff;
+}
+
+.paper-figure-device {
+  background:
+    linear-gradient(135deg, rgba(75, 118, 210, 0.12), rgba(44, 66, 126, 0.05)),
+    #f7f9ff;
+}
+
+.paper-figure-organoid {
+  background:
+    linear-gradient(135deg, rgba(130, 170, 214, 0.14), rgba(72, 107, 160, 0.05)),
+    #f8fbff;
+}
+
+.paper-figure-materials {
+  background:
+    linear-gradient(135deg, rgba(113, 144, 214, 0.12), rgba(167, 199, 238, 0.08)),
+    #f8fbff;
+}
+
+.paper-figure-spatial {
+  background:
+    linear-gradient(135deg, rgba(90, 133, 217, 0.12), rgba(128, 164, 232, 0.08)),
+    #f7faff;
+}
+
+.paper-figure-neuron {
+  background:
+    linear-gradient(135deg, rgba(66, 109, 188, 0.12), rgba(150, 184, 238, 0.08)),
+    #f8fbff;
+}
+
+.paper-details {
+  min-width: 0;
+}
+
+.paper-authors,
+.paper-title {
+  margin: 0;
+}
+
+.paper-authors {
+  color: #334155;
+  font-size: 18px;
+}
+
+.paper-title {
+  margin-top: 4px;
+  color: #000000;
+  font-size: 18px;
+}
+
+.paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
 }
 
 .journal-tag {
@@ -546,11 +639,11 @@ p {
   }
 
   .hero {
-    min-height: 70vh;
+    min-height: 36vh;
   }
 
   .hero-inner {
-    min-height: calc(70vh - 60px);
+    min-height: calc(36vh - 60px);
   }
 
   .hero h1 {
@@ -565,6 +658,8 @@ p {
 
   .about-copy p,
   .research-copy p,
+  .paper-authors,
+  .paper-title,
   .news-list li,
   .publication-item p {
     font-size: 17px;
@@ -577,5 +672,14 @@ p {
 
   .contact-about h3 {
     font-size: 28px;
+  }
+
+  .paper-entry {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .paper-figure {
+    max-width: 240px;
   }
 }
