@@ -279,6 +279,13 @@ p {
   text-align: left;
 }
 
+.resume-note {
+  margin-top: 14px;
+  font-size: 17px;
+  color: #061625;
+  text-align: left;
+}
+
 .resume-list p::before {
   content: "";
   position: absolute;
