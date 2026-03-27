@@ -334,9 +334,16 @@ p {
 .research-papers,
 .publication-item {
   padding: 22px 24px;
-  background: #ffffff;
   border-radius: 8px;
   box-shadow: var(--shadow);
+}
+
+.research-papers {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+}
+
+.publication-item {
+  background: #ffffff;
 }
 
 .research-papers strong:first-child {
