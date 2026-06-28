@@ -1,8 +1,48 @@
 const body = document.body;
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = [...document.querySelectorAll(".nav-link")];
-const sectionTargets = navLinks
-  .map((link) => document.querySelector(link.getAttribute("href")))
+const header = document.querySelector(".site-header");
+const navItems = navLinks
+  .map((link) => ({
+    link,
+    target: document.querySelector(link.getAttribute("href")),
+  }))
+  .filter((item) => item.target);
+
+const setActiveLink = (activeId) => {
+  navLinks.forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("href") === activeId);
+  });
+};
+
+const updateActiveLink = () => {
+  if (!navItems.length) {
+    return;
+  }
+
+  const headerOffset = header ? header.offsetHeight : 0;
+  const threshold = window.scrollY + headerOffset + 24;
+  let activeId = navItems[0].link.getAttribute("href");
+
+  navItems.forEach(({ link, target }) => {
+    if (target.offsetTop <= threshold) {
+      activeId = link.getAttribute("href");
+    }
+  });
+
+  const nearBottom =
+    window.innerHeight + window.scrollY >=
+    document.documentElement.scrollHeight - 2;
+
+  if (nearBottom) {
+    activeId = navItems[navItems.length - 1].link.getAttribute("href");
+  }
+
+  setActiveLink(activeId);
+};
+
+const sectionTargets = navItems
+  .map((item) => item.target)
   .filter(Boolean);
 
 if (menuToggle) {
@@ -21,25 +61,8 @@ navLinks.forEach((link) => {
   });
 });
 
-if ("IntersectionObserver" in window && sectionTargets.length) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const activeId = `#${entry.target.id}`;
-        navLinks.forEach((link) => {
-          link.classList.toggle("active", link.getAttribute("href") === activeId);
-        });
-      });
-    },
-    {
-      rootMargin: "-30% 0px -55% 0px",
-      threshold: 0.1,
-    },
-  );
-
-  sectionTargets.forEach((section) => observer.observe(section));
+if (sectionTargets.length) {
+  updateActiveLink();
+  window.addEventListener("scroll", updateActiveLink, { passive: true });
+  window.addEventListener("resize", updateActiveLink);
 }

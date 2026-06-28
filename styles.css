@@ -23,7 +23,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 300;
   color: var(--text);
@@ -57,7 +57,7 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-family: "Playfair Display", serif;
+  font-family: "Source Serif 4", serif;
 }
 
 p {
@@ -89,7 +89,7 @@ p {
 
 .brand {
   color: var(--heading);
-  font-family: "Playfair Display", serif;
+  font-family: "Source Serif 4", serif;
   font-size: 26px;
   font-weight: 800;
   letter-spacing: 3px;
@@ -331,7 +331,7 @@ p {
 }
 
 .profile-photo-placeholder span {
-  font-family: "Playfair Display", serif;
+  font-family: "Source Serif 4", serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 1;
@@ -529,13 +529,13 @@ p {
 }
 
 .paper-figure {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 4 / 3;
   min-height: 150px;
   padding: 8px;
+  overflow: hidden;
   border: 1px solid #d8dee8;
   border-radius: 8px;
   text-align: center;
@@ -543,8 +543,10 @@ p {
 }
 
 .paper-figure img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   display: block;
   border-radius: 4px;
@@ -607,6 +609,11 @@ p {
   font-size: 18px;
 }
 
+.author-self {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .paper-meta {
   display: flex;
   flex-wrap: wrap;
@@ -624,8 +631,39 @@ p {
   color: #000000;
 }
 
+.paper-link {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 4px;
+  border: 1px solid #1f3656;
+  background: #1f3656;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.paper-link:hover,
+.paper-link:focus {
+  background: #ffffff;
+  color: #1f3656;
+}
+
 .all-publications-link {
   margin-top: 8px;
+}
+
+.paper-footnote {
+  margin: 8px 0 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.paper-footnote span {
+  font-weight: 700;
+  color: var(--heading);
 }
 
 .news-list {
@@ -651,6 +689,11 @@ p {
 .publication-item p {
   font-size: 18px;
   line-height: 1.8;
+}
+
+.publication-item em {
+  font-style: normal;
+  font-weight: 700;
 }
 
 .contact-grid {
