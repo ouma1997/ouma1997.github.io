@@ -1,13 +1,14 @@
 :root {
-  --accent: #155dba;
-  --accent-bright: #2483ff;
-  --heading: #1f3656;
-  --text: #061625;
-  --text-soft: #334155;
-  --line: #d8dee8;
+  --accent: #1772d0;
+  --accent-bright: #1772d0;
+  --accent-hover: #f09228;
+  --heading: #333333;
+  --text: #333333;
+  --text-soft: #555555;
+  --line: #e4e7eb;
   --surface: #ffffff;
-  --section: linear-gradient(180deg, #f3f4f4 0%, #ffffff 100%);
-  --shadow: 0 0 29px rgba(68, 88, 144, 0.12);
+  --section: #fafafa;
+  --shadow: none;
   --container: 1140px;
 }
 
@@ -23,9 +24,9 @@ html {
 
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text);
   background-color: #ffffff;
 }
@@ -41,7 +42,7 @@ a {
 
 a:hover,
 a:focus-visible {
-  color: var(--accent);
+  color: var(--accent-hover);
   text-decoration: none;
 }
 
@@ -57,7 +58,8 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-family: "Source Serif 4", serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
 }
 
 p {
@@ -76,7 +78,7 @@ p {
   z-index: 1000;
   height: 60px;
   background: #ffffff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--line);
 }
 
 .header-inner {
@@ -89,9 +91,9 @@ p {
 
 .brand {
   color: var(--heading);
-  font-family: "Source Serif 4", serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
 }
@@ -108,16 +110,19 @@ p {
 }
 
 .nav-link {
-  color: #000000;
+  color: var(--text);
   font-size: 20px;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.nav-link:hover,
-.nav-link:focus-visible,
 .nav-link.active {
   color: var(--accent);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--accent-hover);
 }
 
 .menu-toggle {
@@ -133,7 +138,7 @@ p {
 .hero {
   position: relative;
   min-height: 38vh;
-  padding: 60px 0 0;
+  padding: 60px 0;
   background:
     linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)),
     url("assets/hero-bg.svg") center center / cover no-repeat;
@@ -147,7 +152,7 @@ p {
 .hero-inner {
   position: relative;
   z-index: 1;
-  min-height: calc(38vh - 60px);
+  min-height: calc(38vh - 120px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -220,23 +225,22 @@ p {
 
 .section-title h2 {
   font-size: 32px;
-  color: #050505;
+  color: var(--heading);
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.35fr);
   gap: 44px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .about-visual {
-  min-height: 430px;
   position: relative;
   display: grid;
   place-items: center;
-  padding: 42px 28px;
-  background: linear-gradient(180deg, #f4f7fc 0%, #edf3fb 100%);
+  padding: 28px;
+  background: #fafafa;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -268,10 +272,9 @@ p {
   z-index: 1;
   width: min(100%, 420px);
   padding: 30px 28px 26px;
-  border: 1px solid rgba(31, 54, 86, 0.08);
+  border: 1px solid var(--line);
   border-radius: 24px;
   background: #ffffff;
-  box-shadow: 0 18px 42px rgba(68, 88, 144, 0.12);
 }
 
 .profile-photo-shell {
@@ -331,7 +334,7 @@ p {
 }
 
 .profile-photo-placeholder span {
-  font-family: "Source Serif 4", serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 1;
@@ -369,10 +372,10 @@ p {
 }
 
 .profile-panel-rule {
-  height: 3px;
+  height: 1px;
   width: 100%;
   margin: 26px 0 20px;
-  background: linear-gradient(90deg, var(--accent-bright) 0%, #8ab7ff 52%, rgba(138, 183, 255, 0) 100%);
+  background: var(--line);
 }
 
 .profile-tags {
@@ -392,9 +395,9 @@ p {
 
 .about-copy p {
   font-size: 20px;
-  font-weight: 300;
-  color: #061625;
-  text-align: justify;
+  font-weight: 400;
+  color: var(--text);
+  text-align: left;
 }
 
 .resume-list {
@@ -414,7 +417,7 @@ p {
 .resume-note {
   margin-top: 14px;
   font-size: 17px;
-  color: #061625;
+  color: var(--text);
   text-align: left;
 }
 
@@ -463,10 +466,10 @@ p {
   display: block;
   margin-bottom: 14px;
   padding-bottom: 6px;
-  color: #1f3656;
+  color: var(--heading);
   font-size: 29px;
   line-height: 1.28;
-  border-bottom: 3px solid #1f3656;
+  border-bottom: 1px solid var(--line);
 }
 
 .research-number {
@@ -475,18 +478,18 @@ p {
 
 .research-copy p {
   font-size: 18px;
-  text-align: justify;
+  text-align: left;
 }
 
 .research-papers,
 .publication-item {
   padding: 22px 24px;
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
 }
 
 .research-papers {
-  background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+  background: #fafafa;
 }
 
 .publication-item {
@@ -496,7 +499,7 @@ p {
 .research-papers strong:first-child {
   display: inline-block;
   margin-bottom: 12px;
-  color: #000000;
+  color: var(--heading);
 }
 
 .research-papers ul {
@@ -516,8 +519,8 @@ p {
 
 .paper-entry {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
   padding: 18px 0;
   border-top: 1px solid var(--line);
@@ -533,27 +536,24 @@ p {
   align-items: center;
   justify-content: center;
   aspect-ratio: 4 / 3;
-  min-height: 150px;
-  padding: 8px;
+  min-height: 180px;
+  padding: 0;
   overflow: hidden;
-  border: 1px solid #d8dee8;
+  border: 1px solid var(--line);
   border-radius: 8px;
   text-align: center;
   background: #ffffff;
 }
 
 .paper-figure img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
-  border-radius: 4px;
 }
 
 .paper-figure span {
-  color: #1f3656;
+  color: var(--heading);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -561,7 +561,7 @@ p {
 }
 
 .paper-figure small {
-  color: #4a6485;
+  color: var(--text-soft);
   font-size: 13px;
 }
 
@@ -599,19 +599,19 @@ p {
 }
 
 .paper-authors {
-  color: #334155;
+  color: var(--text-soft);
   font-size: 18px;
 }
 
 .paper-title {
   margin-top: 4px;
-  color: #000000;
+  color: var(--heading);
   font-size: 18px;
+  font-weight: 700;
 }
 
 .author-self {
   font-weight: 700;
-  text-decoration: underline;
 }
 
 .paper-meta {
@@ -624,20 +624,18 @@ p {
 
 .journal-tag {
   display: inline-block;
-  margin-left: 6px;
-  padding: 2px 7px;
-  border-radius: 4px;
-  background: #f0f0f0;
-  color: #000000;
+  color: var(--text-soft);
+  font-size: 15px;
 }
 
 .paper-link {
-  display: inline-block;
-  padding: 2px 12px;
-  border-radius: 4px;
-  border: 1px solid #1f3656;
-  background: #1f3656;
-  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: #edf4fc;
+  color: var(--accent);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -646,8 +644,8 @@ p {
 
 .paper-link:hover,
 .paper-link:focus {
-  background: #ffffff;
-  color: #1f3656;
+  background: #fdf1e3;
+  color: var(--accent-hover);
 }
 
 .paper-press {
@@ -659,7 +657,7 @@ p {
 }
 
 .paper-press-label {
-  color: #4a6485;
+  color: var(--text-soft);
   font-size: 13px;
   font-weight: 500;
 }
@@ -670,9 +668,9 @@ p {
   gap: 5px;
   padding: 2px 10px;
   border-radius: 999px;
-  border: 1px solid #d8dee8;
+  border: 1px solid var(--line);
   background: #ffffff;
-  color: #1f3656;
+  color: var(--text);
   font-size: 13px;
   text-decoration: none;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -691,8 +689,9 @@ p {
 
 .press-link:hover,
 .press-link:focus {
-  background: #eef4fb;
-  border-color: #1f3656;
+  background: #fafafa;
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
 }
 
 .all-publications-link {
@@ -812,7 +811,7 @@ p {
   padding: 24px 0;
   font-size: 14px;
   background: #ffffff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+  border-top: 1px solid var(--line);
 }
 
 .footer-inner {
@@ -845,7 +844,8 @@ p {
     padding: 12px 0;
     background: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 0 30px rgba(127, 137, 161, 0.25);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 
   body.nav-open .site-nav {
@@ -865,7 +865,6 @@ p {
   }
 
   .about-visual {
-    min-height: 360px;
     padding: 28px 20px;
   }
 }
@@ -935,6 +934,6 @@ p {
   }
 
   .paper-figure {
-    max-width: 240px;
+    max-width: 300px;
   }
 }
