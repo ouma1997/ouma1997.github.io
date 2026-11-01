@@ -444,6 +444,11 @@ strong {
 }
 
 .bio > div:first-child dt {
+  color: var(--ink);
+}
+
+.bio dt span {
+  display: block;
   color: var(--accent);
 }
 
@@ -1164,6 +1169,11 @@ strong {
   .bio > div {
     grid-template-columns: minmax(0, 1fr);
     gap: 4px;
+  }
+
+  .bio dt span {
+    display: inline;
+    margin-left: 10px;
   }
 
   .cv li {
