@@ -58,7 +58,7 @@ class Plate {
       plate: read("--plate", "#f8f9f9"),
       accent: read("--accent", "#c2352b"),
       light: read("--plate-light", "#4b5fe0"),
-      polymer: read("--plate-polymer", "#2a2f96"),
+      polymer: read("--plate-polymer", "#15140f"),
     };
     this.font = `500 10px "IBM Plex Mono", ui-monospace, monospace`;
     this.hatch = hatchPattern(this.ctx, this.color.polymer);
@@ -868,9 +868,9 @@ class Plate {
     ctx.globalAlpha = 0.5;
     ctx.stroke(nearFill);
 
-    ctx.strokeStyle = color.light;
+    ctx.strokeStyle = color.ink;
     ctx.globalAlpha = 0.85;
-    ctx.lineWidth = 1.3;
+    ctx.lineWidth = 0.65;
     ctx.stroke(taggedOutline);
 
     ctx.strokeStyle = color.polymer;
@@ -898,7 +898,7 @@ class Plate {
       ctx.fillStyle = DOMAINS[j].color;
       ctx.fill(path);
     });
-    ctx.fillStyle = color.light;
+    ctx.fillStyle = color.ink;
     ctx.globalAlpha = 0.9;
     ctx.fill(taggedNuclei);
 
@@ -1154,21 +1154,23 @@ class Plate {
     const swatch = (cx, coated) => {
       ctx.beginPath();
       ctx.ellipse(cx, y - 3, 6.5, 5, 0, 0, TAU);
-      ctx.globalAlpha = coated ? 0.3 : 0.12;
-      ctx.fillStyle = coated ? color.polymer : color.light;
-      ctx.fill();
+      if (coated) {
+        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = color.polymer;
+        ctx.fill();
+      }
       if (coated) {
         ctx.globalAlpha = 0.8;
         ctx.fillStyle = this.hatch;
         ctx.fill();
       }
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = coated ? color.polymer : color.light;
-      ctx.lineWidth = coated ? 2 : 1.3;
+      ctx.strokeStyle = coated ? color.polymer : color.ink;
+      ctx.lineWidth = coated ? 2 : 0.65;
       ctx.stroke();
       ctx.beginPath();
       ctx.arc(cx, y - 3, 1.8, 0, TAU);
-      ctx.fillStyle = color.light;
+      ctx.fillStyle = color.ink;
       ctx.fill();
     };
 
