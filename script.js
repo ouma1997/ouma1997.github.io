@@ -42,9 +42,18 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-// Highlight the section in view
+// Highlight the section in view and show it in the running head
 const hero = document.querySelector("#top");
 const sections = navLinks.map((link) => document.querySelector(link.hash)).filter(Boolean);
+const runningHead = document.querySelector(".running-head");
+
+const setRunningHead = (section) => {
+  const num = section?.querySelector(".rail-num");
+  const title = section?.querySelector(".rail h2");
+  runningHead.classList.toggle("is-visible", Boolean(num && title));
+  if (!num || !title) return;
+  runningHead.replaceChildren(Object.assign(document.createElement("b"), { textContent: num.textContent }), title.textContent);
+};
 
 const spy = new IntersectionObserver(
   (entries) => {
@@ -52,6 +61,7 @@ const spy = new IntersectionObserver(
       if (!entry.isIntersecting) return;
       const id = entry.target === hero ? null : `#${entry.target.id}`;
       navLinks.forEach((link) => link.classList.toggle("is-active", link.hash === id));
+      setRunningHead(entry.target === hero ? null : entry.target);
     });
   },
   { rootMargin: "-40% 0px -55% 0px" }

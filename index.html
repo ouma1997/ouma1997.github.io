@@ -8,7 +8,7 @@
       name="description"
       content="Wenbo Wang is a Postdoctoral Associate at the Broad Institute of MIT and Harvard working on agentic AI, flexible bioelectronics, and spatial biology."
     />
-    <meta name="theme-color" content="#f0f2f1" />
+    <meta name="theme-color" content="#e7ece6" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,15 +16,16 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
     />
-    <link rel="stylesheet" href="styles.css?v=20" />
-    <script src="script.js?v=20" defer></script>
-    <script src="plate.js?v=21" defer></script>
+    <link rel="stylesheet" href="styles.css?v=22" />
+    <script src="script.js?v=22" defer></script>
+    <script src="plate.js?v=22" defer></script>
   </head>
   <body>
     <div class="progress" aria-hidden="true"><span></span></div>
 
     <header class="masthead">
       <a class="masthead-name" href="#top"><i class="seal" aria-hidden="true"></i>Wenbo Wang</a>
+      <span class="running-head" aria-hidden="true"></span>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
       <nav id="nav" class="nav" aria-label="Primary navigation">
         <a href="#about"><span>01</span>About</a>
@@ -103,10 +104,10 @@
 
           <figure class="portrait">
             <img
-              src="assets/profile_img.jpg"
+              src="assets/portrait.jpg"
               alt="Portrait of Wenbo Wang"
-              width="820"
-              height="575"
+              width="1400"
+              height="1050"
             />
             <figcaption>
               <span class="label">Fields</span>
@@ -116,12 +117,11 @@
 
           <div class="about-text">
             <p>
-              My research focuses on the intersection of
-              <strong>AI and biomedicine</strong>, where I build
-              <strong>agentic AI systems, biointegrated electronics, and
-              programmable material interfaces</strong> to sense, interpret, and
-              adaptively modulate biological systems across molecular, cellular,
-              tissue, and clinical scales.
+              My research focuses on <strong>AI-guided precision engineering of
+              living biointerfaces</strong>: integrating tissue-embedded
+              bioelectronics, spatial molecular profiling, programmable material
+              interfaces, and agentic AI to read, write, and adaptively tune
+              biological function across molecular, cellular, and tissue scales.
             </p>
             <p>
               I earned my bachelor's degree in chemistry from Zhejiang
@@ -181,17 +181,255 @@
         </header>
 
         <div class="section-body">
+          <div class="research-intro">
+            <p class="research-lead">
+              Living systems are dynamic, spatially organized, and adaptive. We can
+              measure them with ever-increasing resolution, yet our ability to
+              <em>precisely modulate</em> them remains limited.
+            </p>
+            <p>
+              Most interventions are still global, transient, or only weakly
+              informed by the evolving state of the tissue. My research develops
+              AI-guided precision modulation platforms that integrate
+              tissue-embedded bioelectronics, spatial molecular profiling,
+              programmable material interfaces, and agentic AI. Three directions lay
+              the foundation, moving biological engineering from passive
+              observation toward interactive and adaptive control.
+            </p>
+          </div>
+
           <article class="theme">
             <div class="theme-head">
               <span class="theme-num">I</span>
+              <h3>Cyborg tissue&ndash;bioelectronic hybrids for chronic, multimodal sensing and actuation</h3>
+              <p>
+                Precise modulation first requires continuously monitoring biological
+                state within its molecular and functional context. I build cyborg
+                tissue platforms that integrate stretchable mesh nanoelectronics into
+                developing 3D tissues, enabling long-term, tissue-wide,
+                single-cell-level electrophysiological recording and stimulation
+                during organogenesis. Transparent graphene/PEDOT mesh electronics
+                further connect electrical activity with imaging-based spatial
+                transcriptomics &mdash; cell identity, gene expression, and tissue
+                microenvironment. These platforms now move from sensing toward
+                modulation: recordings guide adaptive stimulation that accelerates
+                cardiac organoid maturation, and embedded stimulators enhance the
+                glucose-dependent electrical responses of stem cell&ndash;derived
+                &alpha; and &beta; cells.
+              </p>
+              <svg class="vignette" viewBox="0 0 150 100" aria-hidden="true">
+                <g class="v-cells">
+                  <ellipse cx="22" cy="24" rx="14" ry="11" /><ellipse cx="54" cy="20" rx="13" ry="10" />
+                  <ellipse cx="87" cy="25" rx="14" ry="11" class="v-tint" /><ellipse cx="120" cy="21" rx="13" ry="10" />
+                  <ellipse cx="18" cy="78" rx="13" ry="11" /><ellipse cx="50" cy="80" rx="14" ry="10" />
+                  <ellipse cx="84" cy="77" rx="13" ry="11" /><ellipse cx="117" cy="80" rx="14" ry="11" class="v-tint" />
+                </g>
+                <g class="v-nuclei">
+                  <circle cx="22" cy="24" r="2" /><circle cx="54" cy="20" r="2" /><circle cx="87" cy="25" r="2" /><circle cx="120" cy="21" r="2" />
+                  <circle cx="18" cy="78" r="2" /><circle cx="50" cy="80" r="2" /><circle cx="84" cy="77" r="2" /><circle cx="117" cy="80" r="2" />
+                </g>
+                <path class="v-ribbon" d="M-4 50 q 8 -7 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0" />
+                <path class="v-ribbon-core" d="M-4 50 q 8 -7 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0 t 16 0" />
+                <circle class="v-ring" cx="108" cy="50" r="11" /><circle class="v-ring v-ring-far" cx="108" cy="50" r="18" />
+                <circle class="v-pad" cx="44" cy="50" r="4.5" /><circle class="v-pad" cx="108" cy="50" r="4.5" />
+                <circle class="v-dot" cx="44" cy="50" r="1.6" /><circle class="v-dot v-active" cx="108" cy="50" r="2" />
+              </svg>
+            </div>
+
+            <ol class="papers">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Cyborg_islets.png" alt="Cyborg islets overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Science</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1126/science.aeb3295" target="_blank" rel="noreferrer">Implanted flexible electronics reveal principles of human islet cell electrical maturation</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Li, Q.#; Liu, R.#; Lin, Z.#; Zhang, X.#; <b>Wang, W.#</b>; ...; Alvarez-Dominguez, J.*; Liu, J.*
+                  </p>
+                  <p class="paper-press">
+                    <span class="label">Featured in</span>
+                    <a href="https://www.science.org/doi/10.1126/science.aef2219" target="_blank" rel="noreferrer">Science</a>
+                    <a href="https://www.thetimes.com/uk/science/article/first-cyborg-pancreas-implants-type-1-diabetes-nxkv8r0fp" target="_blank" rel="noreferrer">The Times</a>
+                    <a href="https://www.pennmedicine.org/news/cyborg-implants-help-lab-grown-pancreas-cells-mature" target="_blank" rel="noreferrer">Penn Medicine</a>
+                    <a href="https://seas.harvard.edu/news/cyborg-pancreas-organoids-reveal-how-cells-mature-and-synchronize" target="_blank" rel="noreferrer">Harvard SEAS</a>
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Graphene_seq.png" alt="In situ Graphene-Seq overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Nature Communications</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://www.nature.com/articles/s41467-026-73883-7" target="_blank" rel="noreferrer">In situ Graphene-Seq: Spatial transcriptomics and chronic electrophysiological characterization of tissue microenvironments</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lee, J.#; <b>Wang, W.#</b>; Li, Q.; Lin, Z.; Liu, R.; ...; Wang, X.; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Cyborg_organoids.png" alt="Cyborg organoids overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Nature Protocols</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1038/s41596-025-01147-7" target="_blank" rel="noreferrer">Cyborg organoids integrated with stretchable nanoelectronics can be functionally mapped during development</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lin, Z.#; <b>Wang, W.#</b>; Liu, R.#; Li, Q.#; Lee, J.; Hirschler, C.; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/AI_cyborg.png" alt="AI-cyborg system overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2024</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2024.12.07.627355" target="_blank" rel="noreferrer">An AI-cyborg system for adaptive intelligent modulation of organoid maturation</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Liu, R.#; Ren, Z.#; Zhang, X.#; Li, Q.; <b>Wang, W.</b>; Lin, Z.; ...; Li, N.*; Liu, J.*
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <article class="theme">
+            <div class="theme-head">
+              <span class="theme-num">II</span>
+              <h3>Programmable material interfaces for spatially precise biological modulation</h3>
+              <p>
+                Many biological questions require interventions with cellular or
+                subcellular specificity. I develop programmable material interfaces
+                that are assembled directly within living systems &mdash; through in
+                situ synthesis and optogenetic polymerization &mdash; so that
+                electrically or chemically functional materials can be patterned at
+                defined sites of action with genetic, optical, spatial, and temporal
+                control. This moves modulation beyond transient, global stimulation
+                toward spatially patterned and potentially long-lasting tuning of
+                excitability, synchronization, maturation, and secretion.
+              </p>
+              <svg class="vignette" viewBox="0 0 150 100" aria-hidden="true">
+                <defs>
+                  <radialGradient id="v-glow"><stop offset="0" class="v-glow-in" /><stop offset="1" class="v-glow-out" /></radialGradient>
+                </defs>
+                <path class="v-beam" d="M68 -2 H82 L110 46 H40 Z" />
+                <circle cx="75" cy="60" r="36" fill="url(#v-glow)" />
+                <g class="v-cells">
+                  <ellipse cx="20" cy="40" rx="13" ry="11" /><ellipse cx="128" cy="38" rx="13" ry="11" />
+                  <ellipse cx="22" cy="80" rx="14" ry="10" /><ellipse cx="128" cy="82" rx="13" ry="10" />
+                  <ellipse cx="88" cy="84" rx="13" ry="10" />
+                </g>
+                <g class="v-coated">
+                  <ellipse cx="58" cy="52" rx="14" ry="11" /><ellipse cx="92" cy="50" rx="13" ry="11" /><ellipse cx="56" cy="82" rx="13" ry="10" />
+                </g>
+                <g class="v-nuclei">
+                  <circle cx="20" cy="40" r="2" /><circle cx="128" cy="38" r="2" /><circle cx="22" cy="80" r="2" /><circle cx="128" cy="82" r="2" /><circle cx="88" cy="84" r="2" />
+                </g>
+                <g class="v-tagged"><circle cx="58" cy="52" r="2.2" /><circle cx="92" cy="50" r="2.2" /><circle cx="56" cy="82" r="2.2" /></g>
+                <circle class="v-spot" cx="75" cy="60" r="36" />
+              </svg>
+            </div>
+
+            <ol class="papers">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/In_situ_synthesis.png" alt="In situ synthesis and assembly overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Accounts of Chemical Research</em> · 2024</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1021/acs.accounts.4c00049" target="_blank" rel="noreferrer">In Situ Synthesis and Assembly of Functional Materials and Devices in Living Systems</a>
+                  </h4>
+                  <p class="paper-authors">
+                    <b>Wang, W.#</b>; Sessler, C. D.#; Wang, X.; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Optogenetic_polymers.png" alt="Optogenetic polymerization overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Science Advances</em> · 2022</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1126/sciadv.ade1136" target="_blank" rel="noreferrer">Optogenetic polymerization and assembly of electrically functional polymers for modulation of single-neuron excitability</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Sessler, C. D.#; Zhou, Y.#; <b>Wang, W.#</b>; Hartley, N. D.; Fu, Z.; Graykowski, D.; ...; Wang, X.*; Liu, J.*
+                  </p>
+                  <p class="paper-press">
+                    <span class="label">Featured in</span>
+                    <a href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">MIT News</a>
+                    <a href="https://seas.harvard.edu/news/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">Harvard SEAS</a>
+                    <a href="https://www.broadinstitute.org/publications/broad1348166" target="_blank" rel="noreferrer">Broad Institute</a>
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/PROx_Tag.png" alt="PROx-Tag proximity labeling overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>ChemRxiv</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15000322/v1" target="_blank" rel="noreferrer">PROx-Tag: p-phenylenediamine warheads enable photosensitized proximity labeling with high sensitivity and spatial resolution</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Sessler, C. D.; Roy, A. R.; Nguyen, K.; Ren, P.; <b>Wang, W.</b>; ...; Carr, S. A.; Wang, X.*
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <article class="theme">
+            <div class="theme-head">
+              <span class="theme-num">III</span>
               <h3>Agentic AI for interpreting, designing, and executing biological workflows</h3>
               <p>
-                I create agentic AI systems that turn fragmented bioengineering
-                workflows into adaptive, interpretable research processes &mdash;
-                spanning spatial transcriptomics analysis, flexible bioelectronics
-                design, electrophysiological signal analysis, and physical
-                laboratory guidance.
+                Precision modulation needs an intelligent layer that integrates
+                multimodal data, designs interventions, monitors outcomes, and
+                refines strategies through feedback. I build agentic AI systems that
+                turn fragmented biological and bioengineering workflows into
+                adaptive, interpretable research processes &mdash; spanning spatial
+                transcriptomics analysis, flexible bioelectronics design, fabrication
+                protocol generation, visual quality control, electrophysiological
+                signal analysis, physical laboratory guidance, and organoid
+                phenotyping. Here AI is not merely an analysis tool, but a
+                coordinator that connects sensing, interpretation, intervention, and
+                feedback.
               </p>
+              <svg class="vignette" viewBox="0 0 150 100" aria-hidden="true">
+                <g class="v-cells v-faint">
+                  <ellipse cx="40" cy="22" rx="13" ry="10" /><ellipse cx="102" cy="72" rx="14" ry="11" /><ellipse cx="70" cy="86" rx="12" ry="9" />
+                </g>
+                <g class="v-log">
+                  <rect x="6" y="8" width="26" height="2" /><rect x="6" y="14" width="34" height="2" /><rect x="6" y="20" width="20" height="2" />
+                </g>
+                <path class="v-trail" d="M14 82 L46 52 L84 64 L118 32" />
+                <g class="v-nodes"><circle cx="14" cy="82" r="3" /><circle cx="46" cy="52" r="3" /><circle cx="84" cy="64" r="3" /></g>
+                <g class="v-probe">
+                  <circle cx="118" cy="32" r="8" />
+                  <path d="M118 18 v6 M118 40 v6 M104 32 h6 M126 32 h6" />
+                  <path d="M104 22 v-4 h4 M132 22 v-4 h-4 M104 42 v4 h4 M132 42 v4 h-4" />
+                </g>
+                <circle class="v-dot v-active" cx="118" cy="32" r="1.8" />
+              </svg>
             </div>
 
             <ol class="papers">
@@ -291,155 +529,24 @@
             </ol>
           </article>
 
-          <article class="theme">
-            <div class="theme-head">
-              <span class="theme-num">II</span>
-              <h3>Cyborg tissue&ndash;bioelectronic hybrids for chronic, multimodal sensing and actuation</h3>
-              <p>
-                I build cyborg tissue platforms that integrate stretchable mesh
-                nanoelectronics into developing 3D tissues and organoids, enabling
-                long-term, tissue-wide, single-cell-resolution electrophysiology and
-                seamless integration with spatial transcriptomics. These systems
-                link function to cell identity, gene expression, and tissue
-                microenvironment &mdash; and move from passive sensing toward
-                adaptive modulation of biological systems.
-              </p>
+          <figure class="loop">
+            <div class="loop-diagram">
+              <ol class="loop-steps">
+                <li><span class="label">01</span><b>Sense</b><span>biological state</span></li>
+                <li><span class="label">02</span><b>Interpret</b><span>molecular &amp; spatial context</span></li>
+                <li><span class="label">03</span><b>Write</b><span>precise interventions</span></li>
+                <li><span class="label">04</span><b>Optimize</b><span>through feedback</span></li>
+              </ol>
+              <span class="loop-return label" aria-hidden="true">↺ feedback</span>
             </div>
-
-            <ol class="papers">
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/Cyborg_islets.png" alt="Cyborg islets overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>Science</em> · 2026</p>
-                  <h4 class="paper-title">
-                    <a href="https://doi.org/10.1126/science.aeb3295" target="_blank" rel="noreferrer">Implanted flexible electronics reveal principles of human islet cell electrical maturation</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Li, Q.#; Liu, R.#; Lin, Z.#; Zhang, X.#; <b>Wang, W.#</b>; ...; Alvarez-Dominguez, J.*; Liu, J.*
-                  </p>
-                  <p class="paper-press">
-                    <span class="label">Featured in</span>
-                    <a href="https://www.science.org/doi/10.1126/science.aef2219" target="_blank" rel="noreferrer">Science</a>
-                    <a href="https://www.thetimes.com/uk/science/article/first-cyborg-pancreas-implants-type-1-diabetes-nxkv8r0fp" target="_blank" rel="noreferrer">The Times</a>
-                    <a href="https://www.pennmedicine.org/news/cyborg-implants-help-lab-grown-pancreas-cells-mature" target="_blank" rel="noreferrer">Penn Medicine</a>
-                    <a href="https://seas.harvard.edu/news/cyborg-pancreas-organoids-reveal-how-cells-mature-and-synchronize" target="_blank" rel="noreferrer">Harvard SEAS</a>
-                  </p>
-                </div>
-              </li>
-
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/Graphene_seq.png" alt="In situ Graphene-Seq overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>Nature Communications</em> · 2026</p>
-                  <h4 class="paper-title">
-                    <a href="https://www.nature.com/articles/s41467-026-73883-7" target="_blank" rel="noreferrer">In situ Graphene-Seq: Spatial transcriptomics and chronic electrophysiological characterization of tissue microenvironments</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Lee, J.#; <b>Wang, W.#</b>; Li, Q.; Lin, Z.; Liu, R.; ...; Wang, X.; Liu, J.*
-                  </p>
-                </div>
-              </li>
-
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/Cyborg_organoids.png" alt="Cyborg organoids overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>Nature Protocols</em> · 2025</p>
-                  <h4 class="paper-title">
-                    <a href="https://doi.org/10.1038/s41596-025-01147-7" target="_blank" rel="noreferrer">Cyborg organoids integrated with stretchable nanoelectronics can be functionally mapped during development</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Lin, Z.#; <b>Wang, W.#</b>; Liu, R.#; Li, Q.#; Lee, J.; Hirschler, C.; Liu, J.*
-                  </p>
-                </div>
-              </li>
-
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/AI_cyborg.png" alt="AI-cyborg system overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>bioRxiv</em> · 2024</p>
-                  <h4 class="paper-title">
-                    <a href="https://doi.org/10.1101/2024.12.07.627355" target="_blank" rel="noreferrer">An AI-cyborg system for adaptive intelligent modulation of organoid maturation</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Liu, R.#; Ren, Z.#; Zhang, X.#; Li, Q.; <b>Wang, W.</b>; Lin, Z.; ...; Li, N.*; Liu, J.*
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </article>
-
-          <article class="theme">
-            <div class="theme-head">
-              <span class="theme-num">III</span>
-              <h3>Programmable material interfaces for spatially precise biological modulation</h3>
-              <p>
-                I develop programmable material interfaces that can be synthesized
-                and assembled directly inside living systems to modulate biological
-                function with genetic, optical, spatial, and temporal control.
-              </p>
-            </div>
-
-            <ol class="papers">
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/In_situ_synthesis.png" alt="In situ synthesis and assembly overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>Accounts of Chemical Research</em> · 2024</p>
-                  <h4 class="paper-title">
-                    <a href="https://doi.org/10.1021/acs.accounts.4c00049" target="_blank" rel="noreferrer">In Situ Synthesis and Assembly of Functional Materials and Devices in Living Systems</a>
-                  </h4>
-                  <p class="paper-authors">
-                    <b>Wang, W.#</b>; Sessler, C. D.#; Wang, X.; Liu, J.*
-                  </p>
-                </div>
-              </li>
-
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/Optogenetic_polymers.png" alt="Optogenetic polymerization overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>Science Advances</em> · 2022</p>
-                  <h4 class="paper-title">
-                    <a href="https://doi.org/10.1126/sciadv.ade1136" target="_blank" rel="noreferrer">Optogenetic polymerization and assembly of electrically functional polymers for modulation of single-neuron excitability</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Sessler, C. D.#; Zhou, Y.#; <b>Wang, W.#</b>; Hartley, N. D.; Fu, Z.; Graykowski, D.; ...; Wang, X.*; Liu, J.*
-                  </p>
-                  <p class="paper-press">
-                    <span class="label">Featured in</span>
-                    <a href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">MIT News</a>
-                    <a href="https://seas.harvard.edu/news/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">Harvard SEAS</a>
-                    <a href="https://www.broadinstitute.org/publications/broad1348166" target="_blank" rel="noreferrer">Broad Institute</a>
-                  </p>
-                </div>
-              </li>
-
-              <li class="paper">
-                <button class="paper-fig" type="button" aria-label="Enlarge figure">
-                  <img src="assets/TOC_figures/PROx_Tag.png" alt="PROx-Tag proximity labeling overview figure" loading="lazy" />
-                </button>
-                <div class="paper-body">
-                  <p class="paper-meta"><em>ChemRxiv</em> · 2026</p>
-                  <h4 class="paper-title">
-                    <a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15000322/v1" target="_blank" rel="noreferrer">PROx-Tag: p-phenylenediamine warheads enable photosensitized proximity labeling with high sensitivity and spatial resolution</a>
-                  </h4>
-                  <p class="paper-authors">
-                    Sessler, C. D.; Roy, A. R.; Nguyen, K.; Ren, P.; <b>Wang, W.</b>; ...; Carr, S. A.; Wang, X.*
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </article>
+            <figcaption>
+              Together, these directions build AI-guided biointerfaces that sense
+              biological state, interpret molecular and spatial context, write
+              precise interventions, and adaptively optimize living systems through
+              feedback &mdash; so that living systems can be interactively tuned
+              rather than passively observed.
+            </figcaption>
+          </figure>
 
           <div class="research-foot">
             <p class="label"># Equal contribution &nbsp;·&nbsp; * Corresponding author</p>
@@ -590,8 +697,11 @@
     </main>
 
     <footer class="colophon">
-      <p>&copy; Wenbo Wang. All rights reserved.</p>
-      <p>Set in Newsreader &amp; IBM Plex Mono</p>
+      <p class="signoff"><i class="seal" aria-hidden="true"></i>Wenbo <em>Wang</em></p>
+      <div class="colophon-meta">
+        <p>&copy; Wenbo Wang. All rights reserved.</p>
+        <p>Set in Newsreader &amp; IBM Plex Mono</p>
+      </div>
     </footer>
 
     <dialog class="viewer" aria-label="Figure viewer">
