@@ -406,7 +406,8 @@ class Plate {
   pickOptoElectrode() {
     let best = this.optoElectrode;
     let most = -1;
-    for (const e of this.reachable) {
+    const hosts = this.reachable.filter((e) => this.nearTagged[e].length >= 3);
+    for (const e of hosts.length ? hosts : this.reachable) {
       const fresh = this.nearTagged[e].filter((i) => this.coat[i] < 0.3).length;
       if (fresh > most) {
         most = fresh;
@@ -682,6 +683,7 @@ class Plate {
     if (this.mode === "user" && performance.now() - this.lastPointer > 3500) {
       this.mode = "agent";
       this.task = null;
+      this.cycle = Math.ceil(this.cycle / CYCLE.length) * CYCLE.length;
       this.note("RESUME", "autonomous loop", now);
     }
     if (this.mode === "agent") this.runTask(now);
@@ -913,14 +915,14 @@ class Plate {
     this.electrodes.forEach((e, i) => {
       const active = i === this.channel;
       ctx.beginPath();
-      ctx.arc(e.x, e.y, 5, 0, TAU);
+      ctx.arc(e.x, e.y, 10, 0, TAU);
       ctx.fillStyle = color.plate;
       ctx.fill();
       ctx.strokeStyle = color.ink;
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.4;
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(e.x, e.y, active ? 2.5 : 1.7, 0, TAU);
+      ctx.arc(e.x, e.y, active ? 5 : 3.4, 0, TAU);
       ctx.fillStyle = active ? color.accent : color.ink;
       ctx.fill();
     });
@@ -932,7 +934,7 @@ class Plate {
       const age = (now - p.t) / 1100;
       const e = this.electrodes[p.e];
       ctx.beginPath();
-      ctx.arc(e.x, e.y, 6 + age * 18, 0, TAU);
+      ctx.arc(e.x, e.y, 12 + age * 22, 0, TAU);
       ctx.globalAlpha = (1 - age) * 0.6;
       ctx.stroke();
     }
@@ -953,7 +955,7 @@ class Plate {
         const a = age - lag;
         if (a < 0) continue;
         ctx.beginPath();
-        ctx.arc(e.x, e.y, 6 + a * reach, 0, TAU);
+        ctx.arc(e.x, e.y, 12 + a * reach, 0, TAU);
         ctx.globalAlpha = (1 - a) * 0.85;
         ctx.stroke();
       }
