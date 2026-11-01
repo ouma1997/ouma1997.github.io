@@ -793,6 +793,15 @@ strong {
   color: var(--ink-2);
 }
 
+.contact-meta address {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-style: normal;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
 .elsewhere {
   margin: 12px 0 0;
   padding: 0;

@@ -912,17 +912,18 @@ class Plate {
     this.nodes.forEach((p) => ctx.fillRect(p.x - 3, p.y - 3, 6, 6));
 
     ctx.globalAlpha = 1;
+    const pad = W < 520 ? 7.5 : 10;
     this.electrodes.forEach((e, i) => {
       const active = i === this.channel;
       ctx.beginPath();
-      ctx.arc(e.x, e.y, 10, 0, TAU);
+      ctx.arc(e.x, e.y, pad, 0, TAU);
       ctx.fillStyle = color.plate;
       ctx.fill();
       ctx.strokeStyle = color.ink;
       ctx.lineWidth = 1.4;
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(e.x, e.y, active ? 5 : 3.4, 0, TAU);
+      ctx.arc(e.x, e.y, pad * (active ? 0.5 : 0.34), 0, TAU);
       ctx.fillStyle = active ? color.accent : color.ink;
       ctx.fill();
     });
