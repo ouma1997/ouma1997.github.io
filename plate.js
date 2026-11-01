@@ -58,7 +58,7 @@ class Plate {
       plate: read("--plate", "#f8f9f9"),
       accent: read("--accent", "#c2352b"),
       light: read("--plate-light", "#4b5fe0"),
-      polymer: read("--plate-polymer", "#15140f"),
+      polymer: read("--plate-polymer", "#43291b"),
     };
     this.font = `500 10px "IBM Plex Mono", ui-monospace, monospace`;
     this.hatch = hatchPattern(this.ctx, this.color.polymer);
@@ -868,8 +868,8 @@ class Plate {
     ctx.globalAlpha = 0.5;
     ctx.stroke(nearFill);
 
-    ctx.strokeStyle = color.ink;
-    ctx.globalAlpha = 0.85;
+    ctx.strokeStyle = color.polymer;
+    ctx.globalAlpha = 0.9;
     ctx.lineWidth = 0.65;
     ctx.stroke(taggedOutline);
 
@@ -898,7 +898,7 @@ class Plate {
       ctx.fillStyle = DOMAINS[j].color;
       ctx.fill(path);
     });
-    ctx.fillStyle = color.ink;
+    ctx.fillStyle = color.polymer;
     ctx.globalAlpha = 0.9;
     ctx.fill(taggedNuclei);
 
@@ -1165,12 +1165,12 @@ class Plate {
         ctx.fill();
       }
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = coated ? color.polymer : color.ink;
+      ctx.strokeStyle = color.polymer;
       ctx.lineWidth = coated ? 2 : 0.65;
       ctx.stroke();
       ctx.beginPath();
       ctx.arc(cx, y - 3, 1.8, 0, TAU);
-      ctx.fillStyle = color.ink;
+      ctx.fillStyle = color.polymer;
       ctx.fill();
     };
 

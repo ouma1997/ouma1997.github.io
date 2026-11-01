@@ -11,7 +11,7 @@
   /* Plate channels */
   --plate-cell: #1f6b5a;
   --plate-light: #3f5bd0;
-  --plate-polymer: #15140f;
+  --plate-polymer: #43291b;
 
   --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -1018,7 +1018,7 @@ strong {
 .vignette .v-glow-in { stop-color: var(--plate-light); stop-opacity: 0.24; }
 .vignette .v-glow-out { stop-color: var(--plate-light); stop-opacity: 0; }
 .vignette .v-coated ellipse { fill: var(--plate-polymer); fill-opacity: 0.1; stroke: var(--plate-polymer); stroke-width: 2.2; }
-.vignette .v-tagged circle { fill: var(--ink); }
+.vignette .v-tagged circle { fill: var(--plate-polymer); }
 .vignette .v-spot { fill: none; stroke: var(--plate-light); stroke-opacity: 0.7; stroke-dasharray: 3 4; }
 .vignette .v-log rect { fill: var(--ink-3); opacity: 0.7; }
 .vignette .v-trail { fill: none; stroke: var(--accent); stroke-opacity: 0.75; stroke-dasharray: 2 4; }
