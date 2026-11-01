@@ -1,68 +1,87 @@
-const body = document.body;
+const root = document.documentElement;
+const masthead = document.querySelector(".masthead");
+const progress = document.querySelector(".progress span");
 const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = [...document.querySelectorAll(".nav-link")];
-const header = document.querySelector(".site-header");
-const navItems = navLinks
-  .map((link) => ({
-    link,
-    target: document.querySelector(link.getAttribute("href")),
-  }))
-  .filter((item) => item.target);
+const navLinks = [...document.querySelectorAll(".nav a")];
 
-const setActiveLink = (activeId) => {
-  navLinks.forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("href") === activeId);
-  });
+// Masthead state and reading progress
+const onScroll = () => {
+  const max = root.scrollHeight - window.innerHeight;
+  progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  masthead.classList.toggle("is-scrolled", window.scrollY > 8);
 };
 
-const updateActiveLink = () => {
-  if (!navItems.length) {
-    return;
-  }
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", onScroll);
+onScroll();
 
-  const headerOffset = header ? header.offsetHeight : 0;
-  const threshold = window.scrollY + headerOffset + 24;
-  let activeId = navItems[0].link.getAttribute("href");
-
-  navItems.forEach(({ link, target }) => {
-    if (target.offsetTop <= threshold) {
-      activeId = link.getAttribute("href");
-    }
-  });
-
-  const nearBottom =
-    window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - 2;
-
-  if (nearBottom) {
-    activeId = navItems[navItems.length - 1].link.getAttribute("href");
-  }
-
-  setActiveLink(activeId);
+// Mobile menu
+const closeMenu = () => {
+  document.body.classList.remove("nav-open");
+  menuToggle.setAttribute("aria-expanded", "false");
 };
 
-const sectionTargets = navItems
-  .map((item) => item.target)
-  .filter(Boolean);
+menuToggle.addEventListener("click", () => {
+  const isOpen = document.body.classList.toggle("nav-open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
 
-if (menuToggle) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = body.classList.toggle("nav-open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-  });
-}
+navLinks.forEach((link) => link.addEventListener("click", closeMenu));
 
-navLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    body.classList.remove("nav-open");
-    if (menuToggle) {
-      menuToggle.setAttribute("aria-expanded", "false");
-    }
+// Smooth scrolling only for in-page links, so the browser never animates
+// scroll restoration or other programmatic scrolls on its own
+const smoothScroll = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const target = document.querySelector(link.hash);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: smoothScroll ? "smooth" : "auto" });
+    history.pushState(null, "", link.hash);
   });
 });
 
-if (sectionTargets.length) {
-  updateActiveLink();
-  window.addEventListener("scroll", updateActiveLink, { passive: true });
-  window.addEventListener("resize", updateActiveLink);
-}
+// Highlight the section in view
+const hero = document.querySelector("#top");
+const sections = navLinks.map((link) => document.querySelector(link.hash)).filter(Boolean);
+
+const spy = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target === hero ? null : `#${entry.target.id}`;
+      navLinks.forEach((link) => link.classList.toggle("is-active", link.hash === id));
+    });
+  },
+  { rootMargin: "-40% 0px -55% 0px" }
+);
+
+[hero, ...sections].forEach((section) => spy.observe(section));
+
+// Figure viewer
+const viewer = document.querySelector(".viewer");
+const viewerImg = viewer.querySelector("img");
+const viewerMeta = viewer.querySelector(".viewer-meta");
+const viewerTitle = viewer.querySelector(".viewer-title");
+
+document.querySelectorAll(".paper-fig").forEach((button) => {
+  const paper = button.closest(".paper");
+  const title = paper.querySelector(".paper-title").textContent.trim();
+  button.setAttribute("aria-label", `Enlarge figure: ${title}`);
+
+  button.addEventListener("click", () => {
+    const img = button.querySelector("img");
+    viewerImg.src = img.src;
+    viewerImg.alt = img.alt;
+    viewerMeta.textContent = paper.querySelector(".paper-meta").textContent.trim();
+    viewerTitle.textContent = title;
+    viewer.showModal();
+  });
+});
+
+viewer.addEventListener("click", (event) => {
+  if (event.target === viewer || event.target.closest(".viewer-close")) {
+    viewer.close();
+  }
+});

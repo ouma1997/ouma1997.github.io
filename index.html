@@ -8,602 +8,601 @@
       name="description"
       content="Wenbo Wang is a Postdoctoral Associate at the Broad Institute of MIT and Harvard working on agentic AI, flexible bioelectronics, and spatial biology."
     />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f0f2f1" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=11" />
-    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css?v=20" />
+    <script src="script.js?v=20" defer></script>
+    <script src="plate.js?v=20" defer></script>
   </head>
   <body>
-    <header id="header" class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="#hero">Wenbo Wang</a>
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="site-nav"
-        >
-          Menu
-        </button>
-        <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-          <a class="nav-link active" href="#hero">Home</a>
-          <a class="nav-link" href="#about">About</a>
-          <a class="nav-link" href="#research">Research</a>
-          <a class="nav-link" href="#news">News</a>
-          <a class="nav-link" href="#contact">Contact</a>
-        </nav>
-      </div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+
+    <header class="masthead">
+      <a class="masthead-name" href="#top"><i class="seal" aria-hidden="true"></i>Wenbo Wang</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" class="nav" aria-label="Primary navigation">
+        <a href="#about"><span>01</span>About</a>
+        <a href="#research"><span>02</span>Research</a>
+        <a href="#news"><span>03</span>News</a>
+        <a href="#contact"><span>04</span>Contact</a>
+      </nav>
     </header>
 
-    <section id="hero" class="hero">
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="container hero-inner">
-        <p class="hero-kicker">Broad Institute of MIT and Harvard</p>
-        <h1>Wenbo Wang</h1>
-        <p class="hero-lead">
-          I am a Postdoctoral Associate working at the intersection
-          of agentic AI, flexible bioelectronics, and spatial biology.
-        </p>
-        <div class="hero-actions">
-          <a class="hero-button" href="#about">View profile</a>
-          <a class="hero-button hero-button-secondary" href="#contact">Contact
-          </a>
+    <main>
+      <section id="top" class="hero">
+        <div class="hero-text">
+          <p class="label"><i class="seal" aria-hidden="true"></i>Broad Institute of MIT and Harvard</p>
+          <h1 class="name">Wenbo <em>Wang</em></h1>
+          <p class="statement">
+            Postdoctoral Associate working at the intersection of agentic&nbsp;AI,
+            flexible bioelectronics, and spatial biology.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <main id="main">
-      <section id="about" class="section about">
-        <div class="container">
-          <div class="about-grid">
-            <div class="about-visual">
-              <article class="profile-panel" aria-label="Profile summary card">
-                <div class="profile-photo-shell">
-                  <img
-                    src="assets/profile_img.tif"
-                    alt="Portrait of Wenbo Wang"
-                  />
-                </div>
+        <figure class="plate">
+          <div class="plate-frame">
+            <canvas id="tissue" aria-hidden="true"></canvas>
+            <span class="crop crop-tl" aria-hidden="true"></span>
+            <span class="crop crop-tr" aria-hidden="true"></span>
+            <span class="crop crop-bl" aria-hidden="true"></span>
+            <span class="crop crop-br" aria-hidden="true"></span>
+          </div>
+          <figcaption>
+            <span class="label">Plate I</span>
+            <span>An autonomous agent maps a tissue section threaded with mesh electronics, then records, stimulates, and polymerizes coatings on genetically targeted cells with light. Hover to take over; click to act.</span>
+          </figcaption>
+        </figure>
 
-                <div class="profile-panel-body">
-                  <h3>Wenbo Wang</h3>
-                  <p class="profile-panel-title">
-                    Postdoctoral Associate
-                  </p>
-                  <p class="profile-panel-affiliation">
-                    Broad Institute of MIT and Harvard
-                  </p>
-                  <p class="profile-panel-affiliation">PhD, Harvard University</p>
+        <dl class="index-strip">
+          <div>
+            <dt class="label">Now</dt>
+            <dd>
+              Postdoctoral Associate with Professor Xiao Wang, Broad Institute of
+              MIT and Harvard
+            </dd>
+          </div>
+          <div>
+            <dt class="label">Latest</dt>
+            <dd>
+              <a href="https://doi.org/10.1126/science.aeb3295" target="_blank" rel="noreferrer">Implanted flexible electronics reveal principles of human islet cell electrical maturation</a>,
+              <em>Science</em>, 2026
+            </dd>
+          </div>
+          <div>
+            <dt class="label">Recognition</dt>
+            <dd>
+              <a href="https://ai.google/gemini-for-science/" target="_blank" rel="noreferrer">Gemini for Science Award</a>,
+              Google DeepMind, 2026
+            </dd>
+          </div>
+        </dl>
+      </section>
 
-                  <div class="profile-panel-rule" aria-hidden="true"></div>
+      <section id="about" class="section">
+        <header class="rail">
+          <span class="rail-num">§ 01</span>
+          <h2>About</h2>
+        </header>
 
-                  <ul class="profile-tags" aria-label="Research areas">
-                    <li>Agentic AI</li>
-                    <li>Bioelectronics</li>
-                    <li>Spatial Biology</li>
-                  </ul>
-                </div>
-              </article>
-            </div>
+        <div class="section-body about">
+          <p class="lead">
+            Hi, I am Wenbo, currently a Postdoctoral Associate at the Broad
+            Institute of MIT and Harvard, working with Professor
+            <a href="https://www.broadinstitute.org/bios/xiao-wang" target="_blank" rel="noreferrer">Xiao Wang</a>.
+            I received my PhD in Engineering Sciences from Harvard University,
+            where I was advised by Professor
+            <a href="https://liulab.seas.harvard.edu/prof-jia-liu" target="_blank" rel="noreferrer">Jia Liu</a>
+            at Harvard SEAS.
+          </p>
 
-            <div class="about-copy">
-              <p>
-                Hi, I am Wenbo, currently a Postdoctoral Associate at the Broad
-                Institute of MIT and Harvard, working with Professor
-                <a href="https://www.broadinstitute.org/bios/xiao-wang" target="_blank" rel="noreferrer">Xiao Wang</a>.
-                I received my PhD in Engineering Sciences from Harvard University,
-                where I was advised by Professor
-                <a href="https://liulab.seas.harvard.edu/prof-jia-liu" target="_blank" rel="noreferrer">Jia Liu</a>
-                at Harvard SEAS.
-              </p>
-              <br />
-              <p>
-                My research focuses on the intersection of
-                <strong>AI and biomedicine</strong>, where I build
-                <strong>agentic AI systems, biointegrated electronics, and
-                programmable material interfaces</strong> to sense, interpret, and adaptively modulate biological systems across molecular, cellular, tissue, and clinical scales.
-              </p>
-              <br />
-              <p>
-                I earned my bachelor's degree in chemistry from Zhejiang
-                University, where I was in the Qiushi Honors Program of Chu Kochen Honors College. During my undergraduate studies, I explored supramolecular chemistry under the guidance of Professor 
-                <a href="https://person.zju.edu.cn/en/feihehuang/" target="_blank" rel="noreferrer">Feihe Huang</a> in Zhejiang University and Professor 
-                <a href="https://www.chemistry.utah.edu/faculty/peter-j-stang/" target="_blank" rel="noreferrer">Peter J. Stang</a> at the University of Utah. 
-              </p>
+          <figure class="portrait">
+            <img
+              src="assets/profile_img.jpg"
+              alt="Portrait of Wenbo Wang"
+              width="820"
+              height="575"
+            />
+            <figcaption>
+              <span class="label">Fields</span>
+              <span>Agentic AI · Bioelectronics · Spatial Biology</span>
+            </figcaption>
+          </figure>
 
-              <br />
-              <p>
-                I also worked as a visiting student during pandemic at Westlake University with Professor 
-                <a href="https://en.westlake.edu.cn/faculty/yi-sun.html" target="_blank" rel="noreferrer">Yi Sun</a>, studying the circuit, molecular and functional basis of Drosophila's visual system.
-              </p>
-              <br />
+          <div class="about-text">
+            <p>
+              My research focuses on the intersection of
+              <strong>AI and biomedicine</strong>, where I build
+              <strong>agentic AI systems, biointegrated electronics, and
+              programmable material interfaces</strong> to sense, interpret, and
+              adaptively modulate biological systems across molecular, cellular,
+              tissue, and clinical scales.
+            </p>
+            <p>
+              I earned my bachelor's degree in chemistry from Zhejiang
+              University, where I was in the Qiushi Honors Program of Chu Kochen
+              Honors College. During my undergraduate studies, I explored
+              supramolecular chemistry under the guidance of Professor
+              <a href="https://person.zju.edu.cn/en/feihehuang/" target="_blank" rel="noreferrer">Feihe Huang</a>
+              in Zhejiang University and Professor
+              <a href="https://www.chemistry.utah.edu/faculty/peter-j-stang/" target="_blank" rel="noreferrer">Peter J. Stang</a>
+              at the University of Utah.
+            </p>
+            <p>
+              I also worked as a visiting student during pandemic at Westlake
+              University with Professor
+              <a href="https://en.westlake.edu.cn/faculty/yi-sun.html" target="_blank" rel="noreferrer">Yi Sun</a>,
+              studying the circuit, molecular and functional basis of
+              Drosophila's visual system.
+            </p>
+          </div>
 
-                <div class="resume-list">
-                <p><strong>Postdoctoral Associate, Broad Institute of MIT and Harvard, 2026 - present</strong></p>
-                <p><strong>PhD, Engineering Sciences, Harvard University, 2019 - 2026* </strong></p>
-                <p><strong>MS, Engineering Sciences, Harvard University, 2023</strong></p>
-                <p><strong>BS, Chemistry, Chu Kochen Honors College, Zhejiang University, 2015 - 2019</strong></p>
-                </div>
-
-              <p class="resume-note">
-              <em style="font-size: 0.8em;">
-                *I was on leave of absence from Harvard in 2019-2020
-                and doing coursework remotely in 2020-2021, during the COVID-19 pandemic.
-              </em>
-              </p>
-            </div>
+          <div class="curriculum">
+            <h3 class="label">Curriculum</h3>
+            <ol class="cv">
+              <li>
+                <span class="cv-years">2026 – present</span>
+                <span class="cv-role">Postdoctoral Associate</span>
+                <span class="cv-place">Broad Institute of MIT and Harvard</span>
+              </li>
+              <li>
+                <span class="cv-years">2019 – 2026*</span>
+                <span class="cv-role">PhD, Engineering Sciences</span>
+                <span class="cv-place">Harvard University</span>
+              </li>
+              <li>
+                <span class="cv-years">2023</span>
+                <span class="cv-role">MS, Engineering Sciences</span>
+                <span class="cv-place">Harvard University</span>
+              </li>
+              <li>
+                <span class="cv-years">2015 – 2019</span>
+                <span class="cv-role">BS, Chemistry</span>
+                <span class="cv-place">Chu Kochen Honors College, Zhejiang University</span>
+              </li>
+            </ol>
+            <p class="note">
+              *I was on leave of absence from Harvard in 2019-2020 and doing
+              coursework remotely in 2020-2021, during the COVID-19 pandemic.
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="research" class="section section-bg research">
-        <div class="container">
-          <div class="section-title">
-            <h2>Research</h2>
-          </div>
+      <section id="research" class="section">
+        <header class="rail">
+          <span class="rail-num">§ 02</span>
+          <h2>Research</h2>
+        </header>
 
-          <div class="research-row">
-            <div class="research-copy">
-              <h3>
-                <span class="research-number">1.</span>
-                Agentic AI for interpreting, designing, and executing biological workflows
-              </h3>
+        <div class="section-body">
+          <article class="theme">
+            <div class="theme-head">
+              <span class="theme-num">I</span>
+              <h3>Agentic AI for interpreting, designing, and executing biological workflows</h3>
               <p>
                 I create agentic AI systems that turn fragmented bioengineering
                 workflows into adaptive, interpretable research processes &mdash;
-                spanning spatial transcriptomics analysis, flexible
-                bioelectronics design, electrophysiological signal analysis, and physical
+                spanning spatial transcriptomics analysis, flexible bioelectronics
+                design, electrophysiological signal analysis, and physical
                 laboratory guidance.
               </p>
             </div>
 
-            <div class="research-papers">
-              <strong>Related Papers:</strong>
-              <ul>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-agentic">
-                    <img
-                      src="assets/TOC_figures/Agentic_lab.png"
-                      alt="Overview figure for Agentic Lab"
-                    />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      <span class="author-self">Wang, W.#</span>; Swain, S.#; Lee, J.#; Lin, Z.#; Canales, B.; Aljovic, A.;
-                      ...; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Agentic Lab: An Agentic-physical AI system for cell and
-                      organoid experimentation and manufacturing.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2025)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.11.11.686354" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-spatial">
-                    <img src="assets/TOC_figures/STAgent.png" alt="STAgent spatial transcriptomics AI agent overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      <span class="author-self">Wang, W.#</span>; Lin, Z.#; Marin-Llobet, A.; Li, Q.; Pollock, S. D.;
-                      Sui, X.; ...; Alvarez-Dominguez, J.*; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Spatial transcriptomics AI agent charts hPSC-pancreas maturation in vivo.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Nature Methods, Accepted</em> (2026)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.04.01.646731" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                    <div class="paper-press">
-                      <span class="paper-press-label">Featured in:</span>
-                      <a class="press-link" href="https://hirnetwork.org/news/webinar_july2025" target="_blank" rel="noreferrer">HIRN</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-device">
-                    <img src="assets/TOC_figures/DeviceAgent.png" alt="DeviceAgent autonomous AI agent for flexible bioelectronics overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Lee, J.#; Lin, Z.#; <span class="author-self">Wang, W.#</span>; Baek, J.#; Lee, A. J.; Aljovic, A.;
-                      ...; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>DeviceAgent: An autonomous multimodal AI agent for flexible bioelectronics.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2025); in review at <em>Nature Electronics</em></span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.10.10.681748" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-neuron">
-                    <img src="assets/TOC_figures/Behavior_agent.png" alt="Autonomous behavior analysis AI agent overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Aljovic, A.#*; Lin, Z.#*; <span class="author-self">Wang, W.</span>; Zhang, X.;
-                      ...; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>An autonomous AI agent for universal behavior analysis.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2025)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.05.15.653585" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-device">
-                    <img src="assets/TOC_figures/Spike_sorting_agent.png" alt="Spike sorting AI agent overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Lin, Z.#; Marin-Llobet, A.#; Baek, J.#; He, Y.; Lee, J.; <span class="author-self">Wang, W.</span>;
-                      ...; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Spike sorting AI agent.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2025)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.02.11.637754" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-spatial">
-                    <img src="assets/TOC_figures/Cell_type_BCI_agent.png" alt="Cell-type specific brain-computer interface AI agent overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Marin-Llobet, A.#; Lin, Z.#; Baek, J.#; Aljovic, A.; Zhang, X.; Lee, A. J.; <span class="author-self">Wang, W.</span>;
-                      ...; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>An AI agent for cell-type specific brain&ndash;computer interfaces.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2025)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2025.09.11.675660" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <ol class="papers">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Agentic_lab.png" alt="Overview figure for Agentic Lab" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.11.11.686354" target="_blank" rel="noreferrer">Agentic Lab: An Agentic-physical AI system for cell and organoid experimentation and manufacturing</a>
+                  </h4>
+                  <p class="paper-authors">
+                    <b>Wang, W.#</b>; Swain, S.#; Lee, J.#; Lin, Z.#; Canales, B.; Aljovic, A.; ...; Liu, J.*
+                  </p>
+                </div>
+              </li>
 
-          <div class="research-row">
-            <div class="research-copy">
-              <h3>
-                <span class="research-number">2.</span>
-                Cyborg tissue&ndash;bioelectronic hybrids for chronic, multimodal sensing and actuation
-              </h3>
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/STAgent.png" alt="STAgent spatial transcriptomics AI agent overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Nature Methods</em> · Accepted · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.04.01.646731" target="_blank" rel="noreferrer">Spatial transcriptomics AI agent charts hPSC-pancreas maturation in vivo</a>
+                  </h4>
+                  <p class="paper-authors">
+                    <b>Wang, W.#</b>; Lin, Z.#; Marin-Llobet, A.; Li, Q.; Pollock, S. D.; Sui, X.; ...; Alvarez-Dominguez, J.*; Liu, J.*
+                  </p>
+                  <p class="paper-press">
+                    <span class="label">Featured in</span>
+                    <a href="https://hirnetwork.org/news/webinar_july2025" target="_blank" rel="noreferrer">HIRN</a>
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/DeviceAgent.png" alt="DeviceAgent autonomous AI agent for flexible bioelectronics overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2025 · In review at <em>Nature Electronics</em></p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.10.10.681748" target="_blank" rel="noreferrer">DeviceAgent: An autonomous multimodal AI agent for flexible bioelectronics</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lee, J.#; Lin, Z.#; <b>Wang, W.#</b>; Baek, J.#; Lee, A. J.; Aljovic, A.; ...; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Behavior_agent.png" alt="Autonomous behavior analysis AI agent overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.05.15.653585" target="_blank" rel="noreferrer">An autonomous AI agent for universal behavior analysis</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Aljovic, A.#*; Lin, Z.#*; <b>Wang, W.</b>; Zhang, X.; ...; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Spike_sorting_agent.png" alt="Spike sorting AI agent overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.02.11.637754" target="_blank" rel="noreferrer">Spike sorting AI agent</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lin, Z.#; Marin-Llobet, A.#; Baek, J.#; He, Y.; Lee, J.; <b>Wang, W.</b>; ...; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Cell_type_BCI_agent.png" alt="Cell-type specific brain-computer interface AI agent overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2025.09.11.675660" target="_blank" rel="noreferrer">An AI agent for cell-type specific brain&ndash;computer interfaces</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Marin-Llobet, A.#; Lin, Z.#; Baek, J.#; Aljovic, A.; Zhang, X.; Lee, A. J.; <b>Wang, W.</b>; ...; Liu, J.*
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <article class="theme">
+            <div class="theme-head">
+              <span class="theme-num">II</span>
+              <h3>Cyborg tissue&ndash;bioelectronic hybrids for chronic, multimodal sensing and actuation</h3>
               <p>
                 I build cyborg tissue platforms that integrate stretchable mesh
-                nanoelectronics into developing 3D tissues and organoids,
-                enabling long-term, tissue-wide, single-cell-resolution
-                electrophysiology and seamless integration with spatial transcriptomics. These systems link
-                function to cell identity, gene expression, and tissue
+                nanoelectronics into developing 3D tissues and organoids, enabling
+                long-term, tissue-wide, single-cell-resolution electrophysiology and
+                seamless integration with spatial transcriptomics. These systems
+                link function to cell identity, gene expression, and tissue
                 microenvironment &mdash; and move from passive sensing toward
                 adaptive modulation of biological systems.
               </p>
             </div>
 
-            <div class="research-papers">
-              <strong>Related Papers:</strong>
-              <ul>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-organoid">
-                    <img src="assets/TOC_figures/Cyborg_islets.png" alt="Cyborg islets overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Li, Q.#; Liu, R.#; Lin, Z.#; Zhang, X.#; <span class="author-self">Wang, W.#</span>;
-                      ...; Alvarez-Dominguez, J.*; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Implanted flexible electronics reveal principles of human islet cell electrical maturation.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Science</em> (2026)</span>
-                      <a class="paper-link" href="https://doi.org/10.1126/science.aeb3295" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                    <div class="paper-press">
-                      <span class="paper-press-label">Featured in:</span>
-                      <a class="press-link" href="https://www.science.org/doi/10.1126/science.aef2219" target="_blank" rel="noreferrer">Science</a>
-                      <a class="press-link" href="https://www.thetimes.com/uk/science/article/first-cyborg-pancreas-implants-type-1-diabetes-nxkv8r0fp" target="_blank" rel="noreferrer">The Times</a>
-                      <a class="press-link" href="https://www.pennmedicine.org/news/cyborg-implants-help-lab-grown-pancreas-cells-mature" target="_blank" rel="noreferrer">Penn Medicine</a>
-                      <a class="press-link" href="https://seas.harvard.edu/news/cyborg-pancreas-organoids-reveal-how-cells-mature-and-synchronize" target="_blank" rel="noreferrer">Harvard SEAS</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-spatial">
-                    <img src="assets/TOC_figures/Graphene_seq.png" alt="In situ Graphene-Seq overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Lee, J.#; <span class="author-self">Wang, W.#</span>; Li, Q.; Lin, Z.; Liu, R.;
-                      ...; Wang, X.; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>In situ Graphene-Seq: Spatial transcriptomics and chronic electrophysiological characterization of tissue microenvironments.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Nature Communications</em> (2026)</span>
-                      <a class="paper-link" href="https://www.nature.com/articles/s41467-026-73883-7" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-materials">
-                    <img src="assets/TOC_figures/Cyborg_organoids.png" alt="Cyborg organoids overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Lin, Z.#; <span class="author-self">Wang, W.#</span>; Liu, R.#; Li, Q.#; Lee, J.; Hirschler, C.;
-                      Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Cyborg organoids integrated with stretchable nanoelectronics can be functionally mapped during development.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Nature Protocols</em> (2025)</span>
-                      <a class="paper-link" href="https://doi.org/10.1038/s41596-025-01147-7" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-neuron">
-                    <img src="assets/TOC_figures/AI_cyborg.png" alt="AI-cyborg system overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Liu, R.#; Ren, Z.#; Zhang, X.#; Li, Q.; <span class="author-self">Wang, W.</span>; Lin, Z.;
-                      ...; Li, N.*; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>An AI-cyborg system for adaptive intelligent modulation of organoid maturation.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>bioRxiv</em> (2024)</span>
-                      <a class="paper-link" href="https://doi.org/10.1101/2024.12.07.627355" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <ol class="papers">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Cyborg_islets.png" alt="Cyborg islets overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Science</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1126/science.aeb3295" target="_blank" rel="noreferrer">Implanted flexible electronics reveal principles of human islet cell electrical maturation</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Li, Q.#; Liu, R.#; Lin, Z.#; Zhang, X.#; <b>Wang, W.#</b>; ...; Alvarez-Dominguez, J.*; Liu, J.*
+                  </p>
+                  <p class="paper-press">
+                    <span class="label">Featured in</span>
+                    <a href="https://www.science.org/doi/10.1126/science.aef2219" target="_blank" rel="noreferrer">Science</a>
+                    <a href="https://www.thetimes.com/uk/science/article/first-cyborg-pancreas-implants-type-1-diabetes-nxkv8r0fp" target="_blank" rel="noreferrer">The Times</a>
+                    <a href="https://www.pennmedicine.org/news/cyborg-implants-help-lab-grown-pancreas-cells-mature" target="_blank" rel="noreferrer">Penn Medicine</a>
+                    <a href="https://seas.harvard.edu/news/cyborg-pancreas-organoids-reveal-how-cells-mature-and-synchronize" target="_blank" rel="noreferrer">Harvard SEAS</a>
+                  </p>
+                </div>
+              </li>
 
-          <div class="research-row">
-            <div class="research-copy">
-              <h3>
-                <span class="research-number">3.</span>
-                Programmable material interfaces for spatially precise biological modulation
-              </h3>
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Graphene_seq.png" alt="In situ Graphene-Seq overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Nature Communications</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://www.nature.com/articles/s41467-026-73883-7" target="_blank" rel="noreferrer">In situ Graphene-Seq: Spatial transcriptomics and chronic electrophysiological characterization of tissue microenvironments</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lee, J.#; <b>Wang, W.#</b>; Li, Q.; Lin, Z.; Liu, R.; ...; Wang, X.; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Cyborg_organoids.png" alt="Cyborg organoids overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Nature Protocols</em> · 2025</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1038/s41596-025-01147-7" target="_blank" rel="noreferrer">Cyborg organoids integrated with stretchable nanoelectronics can be functionally mapped during development</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Lin, Z.#; <b>Wang, W.#</b>; Liu, R.#; Li, Q.#; Lee, J.; Hirschler, C.; Liu, J.*
+                  </p>
+                </div>
+              </li>
+
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/AI_cyborg.png" alt="AI-cyborg system overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>bioRxiv</em> · 2024</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1101/2024.12.07.627355" target="_blank" rel="noreferrer">An AI-cyborg system for adaptive intelligent modulation of organoid maturation</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Liu, R.#; Ren, Z.#; Zhang, X.#; Li, Q.; <b>Wang, W.</b>; Lin, Z.; ...; Li, N.*; Liu, J.*
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <article class="theme">
+            <div class="theme-head">
+              <span class="theme-num">III</span>
+              <h3>Programmable material interfaces for spatially precise biological modulation</h3>
               <p>
-                I develop programmable material interfaces that can be
-                synthesized and assembled directly inside living systems to
-                modulate biological function with genetic, optical, spatial, and
-                temporal control.
+                I develop programmable material interfaces that can be synthesized
+                and assembled directly inside living systems to modulate biological
+                function with genetic, optical, spatial, and temporal control.
               </p>
             </div>
 
-            <div class="research-papers">
-              <strong>Related Papers:</strong>
-              <ul>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-materials">
-                    <img src="assets/TOC_figures/In_situ_synthesis.png" alt="In situ synthesis and assembly overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      <span class="author-self">Wang, W.#</span>; Sessler, C. D.#; Wang, X.; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>In Situ Synthesis and Assembly of Functional Materials and Devices in Living Systems.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Accounts of Chemical Research</em> (2024)</span>
-                      <a class="paper-link" href="https://doi.org/10.1021/acs.accounts.4c00049" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-neuron">
-                    <img src="assets/TOC_figures/Optogenetic_polymers.png" alt="Optogenetic polymerization overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Sessler, C. D.#; Zhou, Y.#; <span class="author-self">Wang, W.#</span>; Hartley, N. D.; Fu, Z.;
-                      Graykowski, D.; ...; Wang, X.*; Liu, J.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>Optogenetic polymerization and assembly of electrically functional polymers for modulation of single-neuron excitability.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>Science Advances</em> (2022)</span>
-                      <a class="paper-link" href="https://doi.org/10.1126/sciadv.ade1136" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                    <div class="paper-press">
-                      <span class="paper-press-label">Featured in:</span>
-                      <a class="press-link" href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">MIT News</a>
-                      <a class="press-link" href="https://seas.harvard.edu/news/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">Harvard SEAS</a>
-                      <a class="press-link" href="https://www.broadinstitute.org/publications/broad1348166" target="_blank" rel="noreferrer">Broad Institute</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="paper-entry">
-                  <div class="paper-figure paper-figure-materials">
-                    <img src="assets/TOC_figures/PROx_Tag.png" alt="PROx-Tag proximity labeling overview figure" />
-                  </div>
-                  <div class="paper-details">
-                    <p class="paper-authors">
-                      Sessler, C. D.; Roy, A. R.; Nguyen, K.; Ren, P.; <span class="author-self">Wang, W.</span>;
-                      ...; Carr, S. A.; Wang, X.*
-                    </p>
-                    <p class="paper-title">
-                      <strong>PROx-Tag: p-phenylenediamine warheads enable photosensitized proximity labeling with high sensitivity and spatial resolution.</strong>
-                    </p>
-                    <div class="paper-meta">
-                      <span class="journal-tag"><em>ChemRxiv</em> (2026)</span>
-                      <a class="paper-link" href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15000322/v1" target="_blank" rel="noreferrer">Paper</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <ol class="papers">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/In_situ_synthesis.png" alt="In situ synthesis and assembly overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Accounts of Chemical Research</em> · 2024</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1021/acs.accounts.4c00049" target="_blank" rel="noreferrer">In Situ Synthesis and Assembly of Functional Materials and Devices in Living Systems</a>
+                  </h4>
+                  <p class="paper-authors">
+                    <b>Wang, W.#</b>; Sessler, C. D.#; Wang, X.; Liu, J.*
+                  </p>
+                </div>
+              </li>
 
-          <p class="paper-footnote">
-            <span>#</span> Equal contribution. <span>*</span> Corresponding author.
-          </p>
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/Optogenetic_polymers.png" alt="Optogenetic polymerization overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>Science Advances</em> · 2022</p>
+                  <h4 class="paper-title">
+                    <a href="https://doi.org/10.1126/sciadv.ade1136" target="_blank" rel="noreferrer">Optogenetic polymerization and assembly of electrically functional polymers for modulation of single-neuron excitability</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Sessler, C. D.#; Zhou, Y.#; <b>Wang, W.#</b>; Hartley, N. D.; Fu, Z.; Graykowski, D.; ...; Wang, X.*; Liu, J.*
+                  </p>
+                  <p class="paper-press">
+                    <span class="label">Featured in</span>
+                    <a href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">MIT News</a>
+                    <a href="https://seas.harvard.edu/news/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">Harvard SEAS</a>
+                    <a href="https://www.broadinstitute.org/publications/broad1348166" target="_blank" rel="noreferrer">Broad Institute</a>
+                  </p>
+                </div>
+              </li>
 
-          <p class="all-publications-link">
+              <li class="paper">
+                <button class="paper-fig" type="button" aria-label="Enlarge figure">
+                  <img src="assets/TOC_figures/PROx_Tag.png" alt="PROx-Tag proximity labeling overview figure" loading="lazy" />
+                </button>
+                <div class="paper-body">
+                  <p class="paper-meta"><em>ChemRxiv</em> · 2026</p>
+                  <h4 class="paper-title">
+                    <a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15000322/v1" target="_blank" rel="noreferrer">PROx-Tag: p-phenylenediamine warheads enable photosensitized proximity labeling with high sensitivity and spatial resolution</a>
+                  </h4>
+                  <p class="paper-authors">
+                    Sessler, C. D.; Roy, A. R.; Nguyen, K.; Ren, P.; <b>Wang, W.</b>; ...; Carr, S. A.; Wang, X.*
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <div class="research-foot">
+            <p class="label"># Equal contribution &nbsp;·&nbsp; * Corresponding author</p>
             <a
+              class="scholar-link"
               href="https://scholar.google.com/citations?user=TIyfmcgAAAAJ&amp;hl=en"
               target="_blank"
               rel="noreferrer"
-            >
-              <strong>To see the full publication list, click here</strong>
-            </a>
-          </p>
+            >Full publication list on Google Scholar <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
       </section>
 
-      <section id="news" class="section news">
-        <div class="container">
-          <div class="section-title">
-            <h2>Selected News</h2>
+      <section id="news" class="section">
+        <header class="rail">
+          <span class="rail-num">§ 03</span>
+          <h2>Selected News</h2>
+        </header>
+
+        <div class="section-body">
+          <div class="year-group">
+            <h3 class="year">2027</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2027-05">May</time>
+                <p><span class="tag">Upcoming</span> Invited talk at Intelligent Microscopy for Biological Discovery, HHMI Janelia Research Campus.</p>
+              </li>
+            </ol>
           </div>
 
-          <ul class="news-list">
-            <li>
-              <strong>[2027-05]</strong> Upcoming invited talk at Intelligent
-              Microscopy for Biological Discovery, HHMI Janelia Research Campus.
-            </li>
-            <li>
-              <strong>[2026-11]</strong> Completed my PhD at Harvard and joined
-              the lab of Professor Xiao Wang at the Broad Institute of MIT and
-              Harvard as a Postdoctoral Associate.
-            </li>
-            <li>
-              <strong>[2026-09]</strong> Delivered an invited talk at CZ Biohub.
-            </li>
-            <li>
-              <strong>[2026-08]</strong> Delivered an invited talk at Johnson
-              &amp; Johnson Innovative Medicine.
-            </li>
-            <li>
-              <strong>[2026]</strong> Received the
-              <a href="https://ai.google/gemini-for-science/" target="_blank" rel="noreferrer">Gemini for Science Award</a>
-              from Google DeepMind.
-            </li>
-            <li>
-              <strong>[2026]</strong> Awarded the Sky9 Fellowship.
-            </li>
-            <li>
-              <strong>[2025-12]</strong> Served as a poster judge at the 21st
-              Annual Broad Institute Scientific Retreat.
-            </li>
-            <li>
-              <strong>[2025-07]</strong> Delivered an invited talk at HIRN on
-              “STAgent: Autonomous spatial transcriptomics AI agent for
-              Pancreatic Research and Beyond.”
-            </li>
-            <li>
-              <strong>[2025-01]</strong> Delivered an invited talk at the Smilow
-              Center for Translational Research, University of Pennsylvania.
-            </li>
-            <li>
-              <strong>[2024]</strong> Named a Harvard nominee for the Regeneron
-              Prize for Creative Innovation.
-            </li>
-            <li>
-              <strong>[2024-01]</strong> Research highlighted by
-              <a href="https://seas.harvard.edu/news/2024/01/long-lasting-neural-probe" target="_blank" rel="noreferrer">
-                Harvard SEAS
-              </a>
-              on long-lasting neural probes.
-            </li>
-            <li>
-              <strong>[2023-01]</strong> Presented at the Harvard Materials
-              Research Science and Engineering Center seed meeting.
-            </li>
-            <li>
-              <strong>[2022-12]</strong> Related work was covered by
-              <a href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">
-                MIT News
-              </a>,
-              <a href="https://seas.harvard.edu/news/2022/12/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">
-                Harvard SEAS
-              </a>,
-              and
-              <a href="https://www.broadinstitute.org/news/scientists-use-light-manipulate-neuron-excitability" target="_blank" rel="noreferrer">
-                the Broad Institute
-              </a>.
-            </li>
-          </ul>
+          <div class="year-group">
+            <h3 class="year">2026</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2026-11">Nov</time>
+                <p>Completed my PhD at Harvard and joined the lab of Professor Xiao Wang at the Broad Institute of MIT and Harvard as a Postdoctoral Associate.</p>
+              </li>
+              <li>
+                <time datetime="2026-09">Sep</time>
+                <p>Delivered an invited talk at CZ Biohub.</p>
+              </li>
+              <li>
+                <time datetime="2026-08">Aug</time>
+                <p>Delivered an invited talk at Johnson &amp; Johnson Innovative Medicine.</p>
+              </li>
+              <li>
+                <time datetime="2026">&mdash;</time>
+                <p>Received the <a href="https://ai.google/gemini-for-science/" target="_blank" rel="noreferrer">Gemini for Science Award</a> from Google DeepMind.</p>
+              </li>
+              <li>
+                <time datetime="2026">&mdash;</time>
+                <p>Awarded the Sky9 Fellowship.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="year-group">
+            <h3 class="year">2025</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2025-12">Dec</time>
+                <p>Served as a poster judge at the 21st Annual Broad Institute Scientific Retreat.</p>
+              </li>
+              <li>
+                <time datetime="2025-07">Jul</time>
+                <p>Delivered an invited talk at HIRN on &ldquo;STAgent: Autonomous spatial transcriptomics AI agent for Pancreatic Research and Beyond.&rdquo;</p>
+              </li>
+              <li>
+                <time datetime="2025-01">Jan</time>
+                <p>Delivered an invited talk at the Smilow Center for Translational Research, University of Pennsylvania.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="year-group">
+            <h3 class="year">2024</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2024">&mdash;</time>
+                <p>Named a Harvard nominee for the Regeneron Prize for Creative Innovation.</p>
+              </li>
+              <li>
+                <time datetime="2024-01">Jan</time>
+                <p>Research highlighted by <a href="https://seas.harvard.edu/news/2024/01/long-lasting-neural-probe" target="_blank" rel="noreferrer">Harvard SEAS</a> on long-lasting neural probes.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="year-group">
+            <h3 class="year">2023</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2023-01">Jan</time>
+                <p>Presented at the Harvard Materials Research Science and Engineering Center seed meeting.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="year-group">
+            <h3 class="year">2022</h3>
+            <ol class="entries">
+              <li>
+                <time datetime="2022-12">Dec</time>
+                <p>
+                  Related work was covered by
+                  <a href="https://news.mit.edu/2022/neuron-excitability-optogenetics-1207" target="_blank" rel="noreferrer">MIT News</a>,
+                  <a href="https://seas.harvard.edu/news/2022/12/changing-intrinsic-behavior-neurons" target="_blank" rel="noreferrer">Harvard SEAS</a>, and
+                  <a href="https://www.broadinstitute.org/news/scientists-use-light-manipulate-neuron-excitability" target="_blank" rel="noreferrer">the Broad Institute</a>.
+                </p>
+              </li>
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section id="contact" class="section contact section-bg">
-        <div class="container">
-          <div class="contact-grid">
-            <div class="contact-about">
-              <h3>Wenbo Wang</h3>
-              <p>Postdoctoral Associate</p>
-              <p>Broad Institute of MIT and Harvard</p>
+      <section id="contact" class="section contact">
+        <header class="rail">
+          <span class="rail-num">§ 04</span>
+          <h2>Contact</h2>
+        </header>
 
-              <div class="social-links">
-                <a
-                  href="https://scholar.google.com/citations?user=TIyfmcgAAAAJ&amp;hl=en"
-                  target="_blank"
-                  rel="noreferrer"
-                >Google Scholar
-                </a>
+        <div class="section-body">
+          <ul class="emails">
+            <li><a href="mailto:wenbowang@g.harvard.edu">wenbowang@g.harvard.edu</a></li>
+            <li><a href="mailto:wenbowang1997@gmail.com">wenbowang1997@gmail.com</a></li>
+          </ul>
 
-                <a
-                  href="https://www.linkedin.com/in/wenbo-wang-9042a213a/"
-                  target="_blank"
-                  rel="noreferrer"
-                >LinkedIn
-                </a>
-
-                <a
-                  href="https://github.com/ouma1997/"
-                  target="_blank"
-                  rel="noreferrer"
-                >GitHub
-                </a>
-              </div>
+          <div class="contact-meta">
+            <div>
+              <h3 class="label">Affiliation</h3>
+              <p>
+                Wenbo Wang<br />
+                Postdoctoral Associate<br />
+                Broad Institute of MIT and Harvard
+              </p>
             </div>
-
-            <div class="contact-info">
-              <div class="contact-item">
-                <span class="contact-label">Contact</span>
-                <a href="mailto:wenbowang@g.harvard.edu">wenbowang@g.harvard.edu</a>
-                <span class="contact-label"></span>
-                <a href="mailto:wenbowang1997@gmail.com">wenbowang1997@gmail.com</a>
-              </div>
+            <div>
+              <h3 class="label">Elsewhere</h3>
+              <ul class="elsewhere">
+                <li><a href="https://scholar.google.com/citations?user=TIyfmcgAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://www.linkedin.com/in/wenbo-wang-9042a213a/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/ouma1997/" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a></li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer id="footer">
-      <div class="container footer-inner">
-        <p>&copy; Wenbo Wang. All rights reserved.</p>
-      </div>
+    <footer class="colophon">
+      <p>&copy; Wenbo Wang. All rights reserved.</p>
+      <p>Set in Newsreader &amp; IBM Plex Mono</p>
     </footer>
+
+    <dialog class="viewer" aria-label="Figure viewer">
+      <figure>
+        <img alt="" />
+        <figcaption>
+          <span class="viewer-meta label"></span>
+          <span class="viewer-title"></span>
+          <button class="viewer-close label" type="button">Close <span aria-hidden="true">×</span></button>
+        </figcaption>
+      </figure>
+    </dialog>
   </body>
 </html>
