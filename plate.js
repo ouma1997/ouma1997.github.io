@@ -25,6 +25,7 @@ const BASE_PROFILE = [0.25, 0.2, 0.3, 0.15, 0.3, 0.25, 0.2, 0.25, 0.3, 0.2];
 const LIGHT_MS = 5000;
 const STIM_MS = 1400;
 const ANNOTATE_MS = 1300;
+const SURVEY_STAGGER = 250;
 const ANNOTATION_LIFE = 150000;
 const COMPARE_MS = 12000;
 const SAMPLE_MS = 33.3;
@@ -335,6 +336,7 @@ class Plate {
     this.stims = [];
     this.pulses = [];
     this.annotations = [];
+    this.surveyed = false;
     this.compare = null;
     this.before = null;
     this.later = [];
@@ -380,7 +382,8 @@ class Plate {
       lengths.push(lengths[j - 1] + Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]));
     }
     const top = pts.reduce((highest, p) => (p[1] < highest[1] ? p : highest), pts[0]);
-    return { pts, lengths, total: lengths[lengths.length - 1], top };
+    const bottom = pts.reduce((lowest, p) => (p[1] > lowest[1] ? p : lowest), pts[0]);
+    return { pts, lengths, total: lengths[lengths.length - 1], top, bottom };
   }
 
   prefillTrace() {
@@ -568,7 +571,10 @@ class Plate {
   }
 
   runTask(now) {
-    if (!this.task) this.nextTask(now);
+    if (!this.task) {
+      if (this.surveyed) this.nextTask(now);
+      else this.survey(now);
+    }
     const task = this.task;
 
     if (task.phase === "travel") {
@@ -606,7 +612,9 @@ class Plate {
     }
 
     if (now < task.until) return;
-    if (task.type === "annotate") {
+    if (task.type === "survey") {
+      this.note("ANNOTATE", `${this.domains.length} domains · ${this.pools.domains.length} cells`, now);
+    } else if (task.type === "annotate") {
       this.note("ANNOTATE", `domain ${task.domain.name} · ${task.domain.cells.length} cells`, now);
     } else if (task.type === "record") {
       this.note("INTEGRATE", `ch ${chId(this.electrode)} ↔ cell ${cellId(this.hi)}`, now);
@@ -623,6 +631,15 @@ class Plate {
       this.note("COMPARE", `spikes ${before.count} → ${after.count}`, now);
     }
     this.task = null;
+  }
+
+  // Opening move: segment every domain in a quick staggered sweep so the map
+  // reads within the first few seconds
+  survey(now) {
+    this.surveyed = true;
+    this.note("SEGMENT", `${this.domains.length} domains`, now);
+    this.domains.forEach((d, j) => this.annotate(d, now + j * SURVEY_STAGGER));
+    this.task = { type: "survey", phase: "work", until: now + this.domains.length * SURVEY_STAGGER + ANNOTATE_MS };
   }
 
   annotate(domain, now) {
@@ -1000,10 +1017,12 @@ class Plate {
 
     // Domain annotations drawn by the agent
     ctx.font = this.font;
+    const placed = [];
     for (const a of this.annotations) {
       const hull = a.d.hull;
       const age = now - a.t;
       const progress = a.still ? 1 : Math.min(1, age / ANNOTATE_MS);
+      if (progress <= 0) continue;
       const fade = a.still ? 1 : Math.min(1, (ANNOTATION_LIFE - age) / 3000);
       ctx.strokeStyle = a.d.color;
       ctx.lineWidth = 1.3;
@@ -1014,8 +1033,14 @@ class Plate {
       if (progress > 0.35) {
         const label = `DOMAIN ${a.d.name}`;
         const lw = ctx.measureText(label).width + 10;
-        const lx = Math.min(W - lw - 4, Math.max(4, hull.top[0] - lw / 2));
-        const ly = Math.max(4, hull.top[1] - 9);
+        // Label at the outline's top, or its bottom if the log panel covers the top
+        const log = this.logRect();
+        const place = (p) => [Math.min(W - lw - 4, Math.max(4, p[0] - lw / 2)), Math.max(4, Math.min(H - 21, p[1] - 9))];
+        let [lx, ly] = place(hull.top);
+        if (lx < log.x + log.w && ly < log.y + log.h + 4) [lx, ly] = place(hull.bottom);
+        const hits = () => placed.some((r) => lx < r.x + r.w + 4 && r.x < lx + lw + 4 && ly < r.y + 19 && r.y < ly + 19);
+        for (let tries = 0; tries < 4 && hits(); tries++) ly = Math.min(H - 21, ly + 19);
+        placed.push({ x: lx, y: ly, w: lw });
         ctx.globalAlpha = 0.94 * fade;
         ctx.fillStyle = color.plate;
         ctx.fillRect(lx, ly, lw, 17);
@@ -1103,14 +1128,16 @@ class Plate {
     ctx.textAlign = "left";
   }
 
-  drawLog(now) {
-    const { ctx, W, color } = this;
-    const narrow = W < 520;
+  logRect() {
+    const narrow = this.W < 520;
     const rows = narrow ? 2 : 5;
-    const pw = narrow ? W - 28 : Math.min(296, Math.max(200, W * 0.42));
-    const ph = 34 + rows * 15 + 26;
-    const x = 14;
-    const y = 14;
+    const w = narrow ? this.W - 28 : Math.min(296, Math.max(200, this.W * 0.42));
+    return { x: 14, y: 14, w, h: 34 + rows * 15 + 26, rows };
+  }
+
+  drawLog(now) {
+    const { ctx, color } = this;
+    const { x, y, w: pw, h: ph, rows } = this.logRect();
     this.panel(x, y, pw, ph);
 
     ctx.fillStyle = color.ink;
