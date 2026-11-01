@@ -790,6 +790,7 @@ class Plate {
     const nuclei = new Path2D();
     const domainNuclei = DOMAINS.map(() => new Path2D());
     const taggedNuclei = new Path2D();
+    const taggedOutline = new Path2D();
     const flash = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
     const coat = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
     for (let i = 0; i < n; i++) {
@@ -810,9 +811,11 @@ class Plate {
       if (this.coat[i] > 0.02) cellPath(coat[Math.min(3, Math.floor(this.coat[i] * 4))], poly, x, y);
 
       const r = this.radius[i];
+      if (this.isTagged[i]) cellPath(taggedOutline, poly, x, y);
       const nucleus = this.isTagged[i] ? taggedNuclei : k ? domainNuclei[k - 1] : nuclei;
-      nucleus.moveTo(x + r, y);
-      nucleus.arc(x, y, r, 0, TAU);
+      const nr = this.isTagged[i] ? r * 1.45 : r;
+      nucleus.moveTo(x + nr, y);
+      nucleus.arc(x, y, nr, 0, TAU);
     }
 
     domainFill.forEach((path, j) => {
@@ -862,6 +865,11 @@ class Plate {
     ctx.stroke(membranes);
     ctx.globalAlpha = 0.5;
     ctx.stroke(nearFill);
+
+    ctx.strokeStyle = color.light;
+    ctx.globalAlpha = 0.85;
+    ctx.lineWidth = 1.3;
+    ctx.stroke(taggedOutline);
 
     ctx.strokeStyle = color.polymer;
     coat.forEach((path, b) => {
@@ -1098,7 +1106,7 @@ class Plate {
     const narrow = W < 520;
     const rows = narrow ? 2 : 5;
     const pw = narrow ? W - 28 : Math.min(296, Math.max(200, W * 0.42));
-    const ph = 34 + rows * 15;
+    const ph = 34 + rows * 15 + 26;
     const x = 14;
     const y = 14;
     this.panel(x, y, pw, ph);
@@ -1130,7 +1138,46 @@ class Plate {
       ctx.fillText(entry.detail.slice(0, Math.max(0, reveal - entry.verb.length)), detailX, ly);
     });
     ctx.restore();
+    this.drawLegend(x + 10, y + ph - 13, pw - 20);
     ctx.globalAlpha = 1;
+  }
+
+  // Key for the two cell states the perturbation acts on
+  drawLegend(x, y, w) {
+    const { ctx, color } = this;
+    ctx.globalAlpha = 0.14;
+    ctx.fillStyle = color.ink;
+    ctx.fillRect(x, y - 13, w, 1);
+
+    const swatch = (cx, coated) => {
+      ctx.beginPath();
+      ctx.ellipse(cx, y - 3, 6.5, 5, 0, 0, TAU);
+      ctx.globalAlpha = coated ? 0.3 : 0.12;
+      ctx.fillStyle = coated ? color.polymer : color.light;
+      ctx.fill();
+      if (coated) {
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = this.hatch;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = coated ? color.polymer : color.light;
+      ctx.lineWidth = coated ? 2 : 1.3;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, y - 3, 1.8, 0, TAU);
+      ctx.fillStyle = color.light;
+      ctx.fill();
+    };
+
+    ctx.textBaseline = "alphabetic";
+    swatch(x + 7, false);
+    ctx.fillStyle = color.ink;
+    ctx.fillText("TARGET+", x + 20, y);
+    const second = x + 20 + ctx.measureText("TARGET+").width + 18;
+    swatch(second + 7, true);
+    ctx.fillStyle = color.ink;
+    ctx.fillText("COATED", second + 20, y);
   }
 
   // Multimodal profile of the cell under the probe: transcripts first,
