@@ -11,7 +11,7 @@ const TRACE_LENGTH = 120;
 const SPIKE = [0.18, -1, -0.62, 0.32, 0.26, 0.12, 0.04];
 const SPIKE_SLOW = [0.1, -0.45, -0.75, -0.62, -0.3, 0.12, 0.24, 0.18, 0.08];
 const GENES = 10;
-const CYCLE = ["profile", "annotate", "record", "stimulate", "annotate", "baseline", "illuminate", "postrecord"];
+const CYCLE = ["profile", "annotate", "annotate", "record", "stimulate", "annotate", "annotate", "baseline", "illuminate", "postrecord"];
 // Five spatial domains (position and radius as fractions of the plate), each
 // with its own color and marker genes. Domain B hosts most targeted cells.
 const DOMAINS = [
@@ -24,7 +24,7 @@ const DOMAINS = [
 const BASE_PROFILE = [0.25, 0.2, 0.3, 0.15, 0.3, 0.25, 0.2, 0.25, 0.3, 0.2];
 const LIGHT_MS = 5000;
 const STIM_MS = 1400;
-const ANNOTATE_MS = 2600;
+const ANNOTATE_MS = 1300;
 const ANNOTATION_LIFE = 150000;
 const COMPARE_MS = 12000;
 const SAMPLE_MS = 33.3;
@@ -572,7 +572,9 @@ class Plate {
     const task = this.task;
 
     if (task.phase === "travel") {
-      if (Math.hypot(task.target.x - this.probe.x, task.target.y - this.probe.y) > 1.2) return;
+      // Annotation is a whole-domain call, so the probe need not land exactly on center
+      const arrive = task.type === "annotate" ? this.s * 0.6 : 1.2;
+      if (Math.hypot(task.target.x - this.probe.x, task.target.y - this.probe.y) > arrive) return;
       task.phase = "work";
       this.sense();
       if (task.type === "profile") {
@@ -581,7 +583,7 @@ class Plate {
       } else if (task.type === "annotate") {
         this.note("SEGMENT", `domain ${task.domain.name}`, now);
         this.annotate(task.domain, now);
-        task.until = now + ANNOTATE_MS + 2500;
+        task.until = now + ANNOTATE_MS + 600;
       } else if (task.type === "record") {
         this.note("RECORD", `ch ${chId(this.electrode)}`, now);
         task.until = now + 4000;
