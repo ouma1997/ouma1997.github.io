@@ -9,8 +9,9 @@ const DELAUNAY_URL = "https://cdn.jsdelivr.net/npm/d3-delaunay@6.0.4/+esm";
 const TAU = Math.PI * 2;
 const TRACE_LENGTH = 120;
 const SPIKE = [0.18, -1, -0.62, 0.32, 0.26, 0.12, 0.04];
+const SPIKE_SLOW = [0.1, -0.45, -0.75, -0.62, -0.3, 0.12, 0.24, 0.18, 0.08];
 const GENES = 10;
-const CYCLE = ["profile", "annotate", "record", "stimulate", "profile", "illuminate"];
+const CYCLE = ["profile", "annotate", "record", "stimulate", "baseline", "illuminate", "postrecord"];
 const KIND = ["unlabeled", "cluster A", "marker+", "target+"];
 const PROFILES = [
   [0.25, 0.2, 0.3, 0.15, 0.35, 0.3, 0.2, 0.25, 0.3, 0.2],
@@ -18,14 +19,15 @@ const PROFILES = [
   [0.3, 0.25, 0.2, 0.2, 0.85, 0.7, 0.2, 0.15, 0.3, 0.25],
   [0.2, 0.15, 0.25, 0.2, 0.25, 0.2, 0.9, 0.8, 0.3, 0.6],
 ];
-const LIGHT_MS = 4000;
+const LIGHT_MS = 5000;
 const STIM_MS = 1400;
 const ANNOTATE_MS = 2600;
-const ANNOTATION_LIFE = 42000;
+const ANNOTATION_LIFE = 90000;
+const COMPARE_MS = 12000;
 const SAMPLE_MS = 33.3;
 const TYPE_MS = 30;
-// The scene runs on its own clock at a third of real time; cursor control stays real-time
-const TEMPO = 1 / 3;
+// The scene runs on its own clock at two thirds of real time; cursor control stays real-time
+const TEMPO = 2 / 3;
 
 const canvas = document.getElementById("tissue");
 
@@ -303,6 +305,13 @@ class Plate {
     });
     this.electrode = this.reachable[0] ?? 0;
 
+    // Targeted cells around each electrode, for the perturbation experiment
+    const reach = s * 2.4;
+    this.nearTagged = this.electrodes.map((e) =>
+      this.tagged.filter((i) => Math.hypot(this.base[2 * i] - e.x, this.base[2 * i + 1] - e.y) < reach)
+    );
+    this.optoElectrode = this.electrode;
+
     // Start the probe on the domain-A cell nearest the domain's center
     const pool = this.pools.a.length ? this.pools.a : this.interiorCells;
     let start = pool[0] ?? 0;
@@ -323,6 +332,8 @@ class Plate {
     this.stims = [];
     this.pulses = [];
     this.annotations = [];
+    this.compare = null;
+    this.before = null;
     this.later = [];
     this.trail = [];
     this.lastTrail = 0;
@@ -377,15 +388,58 @@ class Plate {
   // A still frame that shows the whole loop, for reduced motion
   stage() {
     this.annotations = this.domains.filter((d) => d.hull).map((d) => ({ d, t: 0, still: true }));
-    const b = this.domains[1];
-    this.illuminate(b.x, b.y, 0);
+    const e = (this.optoElectrode = this.pickOptoElectrode());
+    const before = this.record(e, 11);
+    this.illuminate(this.electrodes[e].x, this.electrodes[e].y, 0);
+    const after = this.record(e, 23);
+    this.compare = { e, before, after, until: Infinity };
     this.log = this.log.slice(0, 1);
     this.note("PLAN", "map → annotate → perturb", 0);
-    this.note("PROFILE", `cell ${cellId(this.hi)} · ${KIND[this.kind[this.hi]]}`, 0);
     this.note("ANNOTATE", `domain A · ${this.domains[0].cells.length} cells`, 0);
-    this.note("INTEGRATE", `ch ${chId(this.electrode)} ↔ RNA`, 0);
+    this.note("RECORD", `ch ${chId(e)} · baseline`, 0);
     this.note("ILLUMINATE", "light · target+ cells", 0);
-    this.note("POLYMERIZE", `${this.light.coated.size} cells coated`, 0);
+    this.note("POLYMERIZE", cellCount(this.light.coated.size, "coated"), 0);
+    this.note("COMPARE", `spikes ${before.count} → ${after.count}`, 0);
+  }
+
+  // Electrode whose surrounding targeted cells are least coated
+  pickOptoElectrode() {
+    let best = this.optoElectrode;
+    let most = -1;
+    for (const e of this.reachable) {
+      const fresh = this.nearTagged[e].filter((i) => this.coat[i] < 0.3).length;
+      if (fresh > most) {
+        most = fresh;
+        best = e;
+      }
+    }
+    return best;
+  }
+
+  // Coating the targeted cells around an electrode lowers their excitability
+  excitability(e) {
+    const cells = this.nearTagged[e];
+    if (!cells.length) return 1;
+    let sum = 0;
+    for (const i of cells) sum += this.coat[i];
+    return 1 - 0.65 * (sum / cells.length);
+  }
+
+  // A representative recording window from electrode e at its current excitability
+  record(e, seed) {
+    const ex = this.excitability(e);
+    const rand = mulberry32(seed);
+    const trace = new Float32Array(TRACE_LENGTH);
+    for (let j = 0; j < TRACE_LENGTH; j++) trace[j] = (rand() - 0.5) * 0.12;
+    const count = Math.max(1, Math.round(5 * ex));
+    const shape = ex < 0.8 ? SPIKE_SLOW : SPIKE;
+    const amp = 0.95 - 0.35 * (1 - ex);
+    for (let c = 0; c < count; c++) {
+      const at = Math.floor(((c + 0.5) / count) * (TRACE_LENGTH - shape.length) + (rand() - 0.5) * 8);
+      const start = Math.max(0, Math.min(TRACE_LENGTH - shape.length, at));
+      shape.forEach((v, k) => (trace[start + k] += v * amp));
+    }
+    return { trace, count };
   }
 
   note(verb, detail, now) {
@@ -467,7 +521,7 @@ class Plate {
       this.illuminate(p.x, p.y, now);
       this.note("ILLUMINATE", "manual · light", now);
       const light = this.light;
-      this.later.push({ at: now + LIGHT_MS, verb: "POLYMERIZE", detail: () => `${light.coated.size} cells coated` });
+      this.later.push({ at: now + LIGHT_MS, verb: "POLYMERIZE", detail: () => cellCount(light.coated.size, "coated") });
     }
     if (this.reduce) {
       this.later.forEach((l) => this.note(l.verb, l.detail(), now));
@@ -496,8 +550,8 @@ class Plate {
     } else if (type === "stimulate") {
       task.target = { ...this.electrodes[this.electrode] };
     } else {
-      const fresh = this.pools.tagged.filter((i) => this.coat[i] < 0.3);
-      task.target = this.at(this.pick(fresh.length ? fresh : this.pools.tagged));
+      if (type === "baseline") this.optoElectrode = this.pickOptoElectrode();
+      task.target = { ...this.electrodes[this.optoElectrode] };
     }
     this.task = task;
     this.target = { ...task.target };
@@ -513,22 +567,28 @@ class Plate {
       this.sense();
       if (task.type === "profile") {
         this.note("PROFILE", `cell ${cellId(this.hi)} · ${KIND[this.kind[this.hi]]}`, now);
-        task.until = now + 2400;
+        task.until = now + 4000;
       } else if (task.type === "annotate") {
         this.note("SEGMENT", `domain ${task.domain.name}`, now);
         this.annotate(task.domain, now);
-        task.until = now + ANNOTATE_MS + 700;
+        task.until = now + ANNOTATE_MS + 2500;
       } else if (task.type === "record") {
         this.note("RECORD", `ch ${chId(this.electrode)}`, now);
-        task.until = now + 2800;
+        task.until = now + 4000;
       } else if (task.type === "stimulate") {
         task.count = this.stimulate(this.electrode, now);
         this.note("STIMULATE", `ch ${chId(this.electrode)} · biphasic`, now);
-        task.until = now + 2400;
-      } else {
+        task.until = now + 3500;
+      } else if (task.type === "baseline") {
+        this.note("RECORD", `ch ${chId(this.optoElectrode)} · baseline`, now);
+        task.until = now + 3500;
+      } else if (task.type === "illuminate") {
         this.illuminate(this.probe.x, this.probe.y, now);
         this.note("ILLUMINATE", "light · target+ cells", now);
-        task.until = now + LIGHT_MS + 500;
+        task.until = now + LIGHT_MS + 800;
+      } else {
+        this.note("RECORD", `ch ${chId(this.optoElectrode)} · post-coat`, now);
+        task.until = now + 3500;
       }
       return;
     }
@@ -540,8 +600,15 @@ class Plate {
       this.note("INTEGRATE", `ch ${chId(this.electrode)} ↔ cell ${cellId(this.hi)}`, now);
     } else if (task.type === "stimulate") {
       this.note("VERIFY", `evoked · ${task.count} cells`, now);
+    } else if (task.type === "baseline") {
+      this.before = this.record(this.optoElectrode, 11);
     } else if (task.type === "illuminate") {
-      this.note("POLYMERIZE", `${this.light.coated.size} cells coated`, now);
+      this.note("POLYMERIZE", cellCount(this.light.coated.size, "coated"), now);
+    } else if (task.type === "postrecord") {
+      const after = this.record(this.optoElectrode, 23);
+      const before = this.before ?? after;
+      this.compare = { e: this.optoElectrode, before, after, until: now + COMPARE_MS };
+      this.note("COMPARE", `spikes ${before.count} → ${after.count}`, now);
     }
     this.task = null;
   }
@@ -641,7 +708,7 @@ class Plate {
     for (let g = 0; g < GENES; g++) this.bars[g] += (profile[g] - this.bars[g]) * k;
 
     // Light-guided polymerization coats only targeted cells in the beam
-    const decay = dt / 60000;
+    const decay = dt / 40000;
     for (let i = 0; i < this.n; i++) if (this.coat[i] > 0) this.coat[i] = Math.max(0, this.coat[i] - decay);
     const L = this.light;
     if (L && !L.still) {
@@ -675,9 +742,10 @@ class Plate {
 
   sample(now) {
     const a = this.activation;
-    if (!this.queue.length && Math.random() < 0.004 + 0.05 * a) {
-      const amp = 0.25 + 0.75 * a;
-      this.queue = SPIKE.map((v) => ({ v: v * amp, f: 0 }));
+    const ex = this.excitability(this.channel);
+    if (!this.queue.length && Math.random() < (0.004 + 0.05 * a) * ex) {
+      const amp = (0.25 + 0.75 * a) * (1 - 0.35 * (1 - ex));
+      this.queue = (ex < 0.8 ? SPIKE_SLOW : SPIKE).map((v) => ({ v: v * amp, f: 0 }));
       if (a > 0.5) {
         this.pulses.push({ e: this.channel, t: now });
         const el = this.electrodes[this.channel];
@@ -727,8 +795,8 @@ class Plate {
       if (near.has(i)) cellPath(nearFill, poly, x, y);
 
       const age = now - this.flashAt[i];
-      if (age >= 0 && age < 2000) {
-        cellPath(flash[Math.min(3, Math.floor(Math.exp(-age / 550) * 4))], poly, x, y);
+      if (age >= 0 && age < 3500) {
+        cellPath(flash[Math.min(3, Math.floor(Math.exp(-age / 1100) * 4))], poly, x, y);
       }
       if (this.coat[i] > 0.02) cellPath(coat[Math.min(3, Math.floor(this.coat[i] * 4))], poly, x, y);
 
@@ -985,7 +1053,8 @@ class Plate {
     ctx.fill();
 
     this.drawLog(now);
-    this.drawProfile();
+    if (this.compare && now < this.compare.until) this.drawCompare();
+    else this.drawProfile();
     ctx.globalAlpha = 1;
   }
 
@@ -1100,6 +1169,55 @@ class Plate {
     ctx.lineWidth = 1.4;
     ctx.stroke();
   }
+
+  // Recordings from the perturbed electrode before and after coating
+  drawCompare() {
+    const { ctx, W, H, color } = this;
+    const c = this.compare;
+    const pw = W < 520 ? Math.min(210, W * 0.58) : Math.min(240, Math.max(176, W * 0.34));
+    const ph = 90;
+    const x = W - pw - 14;
+    const y = H - ph - 14;
+    this.panel(x, y, pw, ph);
+
+    ctx.fillStyle = color.ink;
+    ctx.fillText(`CH ${chId(c.e)} · COATED`, x + 10, y + 17);
+    ctx.textAlign = "right";
+    ctx.fillStyle = color.ink3;
+    ctx.fillText("SPIKES", x + pw - 10, y + 17);
+    ctx.textAlign = "left";
+
+    const x0 = x + 56;
+    const x1 = x + pw - 28;
+    const xAt = (j) => x0 + (j / (TRACE_LENGTH - 1)) * (x1 - x0);
+    const rows = [
+      { rec: c.before, label: "PRE", tone: color.ink3, line: color.ink, alpha: 0.55, mid: y + 47 },
+      { rec: c.after, label: "POST", tone: color.polymer, line: color.polymer, alpha: 1, mid: y + 73 },
+    ];
+    for (const row of rows) {
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = row.tone;
+      ctx.fillText(row.label, x + 10, row.mid + 4);
+      ctx.textAlign = "right";
+      ctx.fillText(String(row.rec.count), x + pw - 10, row.mid + 4);
+      ctx.textAlign = "left";
+      ctx.beginPath();
+      for (let j = 0; j < TRACE_LENGTH; j++) {
+        const yy = row.mid - row.rec.trace[j] * 9;
+        if (j) ctx.lineTo(xAt(j), yy);
+        else ctx.moveTo(xAt(j), yy);
+      }
+      ctx.strokeStyle = row.line;
+      ctx.globalAlpha = row.alpha;
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+
+function cellCount(k, what) {
+  return `${k} cell${k === 1 ? "" : "s"} ${what}`;
 }
 
 function cellId(i) {
