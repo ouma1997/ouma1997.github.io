@@ -306,20 +306,11 @@ strong {
 .crop-br { bottom: -15px; right: -15px; border-left: 1px solid var(--ink); border-top: 1px solid var(--ink); }
 
 .plate figcaption {
-  display: flex;
-  gap: 18px;
-  align-items: baseline;
   margin-top: 24px;
   font-size: 15px;
   font-style: italic;
   line-height: 1.4;
   color: var(--ink-3);
-}
-
-.plate figcaption .label {
-  flex: none;
-  font-style: normal;
-  color: var(--ink);
 }
 
 
