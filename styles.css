@@ -424,6 +424,33 @@ strong {
   color: var(--ink-2);
 }
 
+.bio {
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.bio > div {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.bio dd {
+  margin: 0;
+}
+
+.bio dt {
+  color: var(--ink-3);
+}
+
+.bio > div:first-child dt {
+  color: var(--accent);
+}
+
 .curriculum {
   grid-column: 1 / -1;
 }
@@ -1136,6 +1163,11 @@ strong {
 @media (max-width: 600px) {
   body {
     font-size: 17px;
+  }
+
+  .bio > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
   }
 
   .cv li {
