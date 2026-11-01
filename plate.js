@@ -15,11 +15,11 @@ const CYCLE = ["profile", "annotate", "record", "stimulate", "annotate", "baseli
 // Five spatial domains (position and radius as fractions of the plate), each
 // with its own color and marker genes. Domain B hosts most targeted cells.
 const DOMAINS = [
-  { name: "A", x: 0.66, y: 0.34, r: 0.16, color: "#1f6b5a", genes: [0, 1] },
-  { name: "B", x: 0.25, y: 0.71, r: 0.15, color: "#a0661a", genes: [2, 3] },
-  { name: "C", x: 0.88, y: 0.62, r: 0.12, color: "#843f6e", genes: [4, 5] },
-  { name: "D", x: 0.45, y: 0.54, r: 0.11, color: "#5b6d1d", genes: [6, 7] },
-  { name: "E", x: 0.13, y: 0.4, r: 0.1, color: "#1c6784", genes: [8, 9] },
+  { name: "A", x: 0.66, y: 0.3, r: 0.24, color: "#1f6b5a", genes: [0, 1] },
+  { name: "B", x: 0.24, y: 0.74, r: 0.22, color: "#a0661a", genes: [2, 3] },
+  { name: "C", x: 0.9, y: 0.72, r: 0.2, color: "#843f6e", genes: [4, 5] },
+  { name: "D", x: 0.48, y: 0.6, r: 0.17, color: "#5b6d1d", genes: [6, 7] },
+  { name: "E", x: 0.13, y: 0.3, r: 0.19, color: "#1c6784", genes: [8, 9] },
 ];
 const BASE_PROFILE = [0.25, 0.2, 0.3, 0.15, 0.3, 0.25, 0.2, 0.25, 0.3, 0.2];
 const LIGHT_MS = 5000;
@@ -58,9 +58,10 @@ class Plate {
       plate: read("--plate", "#f8f9f9"),
       accent: read("--accent", "#c2352b"),
       light: read("--plate-light", "#4b5fe0"),
-      polymer: read("--plate-polymer", "#222c63"),
+      polymer: read("--plate-polymer", "#2a2f96"),
     };
     this.font = `500 10px "IBM Plex Mono", ui-monospace, monospace`;
+    this.hatch = hatchPattern(this.ctx, this.color.polymer);
 
     this.mode = "agent";
     this.lastPointer = -Infinity;
@@ -197,6 +198,7 @@ class Plate {
     this.points = Float64Array.from(this.base);
     this.phase = Float32Array.from({ length: n * 2 }, () => rand() * TAU);
     this.domainOf = new Uint8Array(n);
+    this.core = new Uint8Array(n);
     this.isTagged = new Uint8Array(n);
     this.radius = new Float32Array(n);
     this.expr = new Float32Array(n * GENES);
@@ -210,28 +212,31 @@ class Plate {
     for (let i = 0; i < n; i++) {
       const [x, y] = pts[i];
       let k = -1;
-      let best = 0.48;
+      let best = 0;
       this.domains.forEach((d, j) => {
-        const g = near(d, x, y) + (rand() - 0.5) * 0.3;
+        const g = near(d, x, y) + (rand() - 0.5) * 0.24;
         if (g > best) {
           best = g;
           k = j;
         }
       });
-      if (k >= 0) this.domains[k].cells.push(i);
+      const core = best > 0.34;
+      if (core) this.domains[k].cells.push(i);
+      else if (rand() > 0.15 + best * 1.6) k = -1;
       this.domainOf[i] = k + 1;
-      this.isTagged[i] = (k === 1 ? rand() < 0.62 : rand() < 0.02) ? 1 : 0;
+      this.core[i] = core ? 1 : 0;
+      this.isTagged[i] = (k === 1 && core ? rand() < 0.62 : rand() < 0.02) ? 1 : 0;
       this.radius[i] = s * (0.07 + rand() * 0.035);
 
       const marks = k >= 0 ? DOMAINS[k].genes : [];
       for (let g = 0; g < GENES; g++) {
-        const high = marks.includes(g) ? 0.62 : 0;
+        const high = marks.includes(g) ? (core ? 0.62 : 0.45) : 0;
         const reporter = this.isTagged[i] && g === 9 ? 0.5 : 0;
         const v = BASE_PROFILE[g] * (k >= 0 ? 0.7 : 1) + high + reporter + (rand() - 0.5) * 0.25;
         this.expr[i * GENES + g] = Math.min(1, Math.max(0.04, v));
       }
 
-      const count = k >= 0 ? 3 + Math.floor(rand() * 3) : this.isTagged[i] ? 1 + Math.floor(rand() * 2) : rand() < 0.35 ? 1 : 0;
+      const count = core ? 3 + Math.floor(rand() * 3) : k >= 0 || this.isTagged[i] ? 1 + Math.floor(rand() * 2) : rand() < 0.35 ? 1 : 0;
       for (let j = 0; j < count; j++) {
         const angle = rand() * TAU;
         const r = s * (0.14 + rand() * 0.2);
@@ -648,7 +653,7 @@ class Plate {
   }
 
   illuminate(x, y, now) {
-    this.light = { x, y, r: this.s * 2.6, t: now, coated: new Set() };
+    this.light = { x, y, r: this.s * 3, t: now, coated: new Set() };
     if (!this.reduce) return;
     this.light.still = true;
     for (const i of this.tagged) {
@@ -780,6 +785,7 @@ class Plate {
     // Cells, grouped into batched paths
     const membranes = new Path2D();
     const domainFill = DOMAINS.map(() => new Path2D());
+    const scatterFill = DOMAINS.map(() => new Path2D());
     const nearFill = new Path2D();
     const nuclei = new Path2D();
     const domainNuclei = DOMAINS.map(() => new Path2D());
@@ -794,7 +800,7 @@ class Plate {
       if (!poly) continue;
       cellPath(membranes, poly, x, y);
       const k = this.domainOf[i];
-      if (k) cellPath(domainFill[k - 1], poly, x, y);
+      if (k) cellPath((this.core[i] ? domainFill : scatterFill)[k - 1], poly, x, y);
       if (near.has(i)) cellPath(nearFill, poly, x, y);
 
       const age = now - this.flashAt[i];
@@ -809,18 +815,23 @@ class Plate {
       nucleus.arc(x, y, r, 0, TAU);
     }
 
-    ctx.globalAlpha = 0.24;
     domainFill.forEach((path, j) => {
       ctx.fillStyle = DOMAINS[j].color;
+      ctx.globalAlpha = 0.26;
       ctx.fill(path);
+      ctx.globalAlpha = 0.13;
+      ctx.fill(scatterFill[j]);
     });
     ctx.fillStyle = color.ink;
     ctx.globalAlpha = 0.045;
     ctx.fill(nearFill);
 
-    ctx.fillStyle = color.polymer;
     coat.forEach((path, b) => {
-      ctx.globalAlpha = 0.05 + b * 0.04;
+      ctx.fillStyle = color.polymer;
+      ctx.globalAlpha = 0.12 + b * 0.08;
+      ctx.fill(path);
+      ctx.fillStyle = this.hatch;
+      ctx.globalAlpha = 0.3 + b * 0.18;
       ctx.fill(path);
     });
 
@@ -854,8 +865,8 @@ class Plate {
 
     ctx.strokeStyle = color.polymer;
     coat.forEach((path, b) => {
-      ctx.globalAlpha = 0.45 + b * 0.15;
-      ctx.lineWidth = 0.9 + b * 0.55;
+      ctx.globalAlpha = 0.55 + b * 0.15;
+      ctx.lineWidth = 1.3 + b * 0.6;
       ctx.stroke(path);
     });
 
@@ -1221,6 +1232,25 @@ class Plate {
     }
     ctx.globalAlpha = 1;
   }
+}
+
+// Diagonal hatching that marks polymer-coated cells
+function hatchPattern(ctx, color) {
+  const tile = document.createElement("canvas");
+  tile.width = 6;
+  tile.height = 6;
+  const g = tile.getContext("2d");
+  g.strokeStyle = color;
+  g.lineWidth = 1.2;
+  g.beginPath();
+  g.moveTo(-1, 7);
+  g.lineTo(7, -1);
+  g.moveTo(-1, 1);
+  g.lineTo(1, -1);
+  g.moveTo(5, 7);
+  g.lineTo(7, 5);
+  g.stroke();
+  return ctx.createPattern(tile, "repeat");
 }
 
 function cellCount(k, what) {
