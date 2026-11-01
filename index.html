@@ -16,8 +16,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
     />
-    <link rel="stylesheet" href="styles.css?v=33" />
-    <script src="script.js?v=22" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=%E7%8E%8B%E6%96%87%E5%8D%9A&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css?v=35" />
+    <script src="script.js?v=23" defer></script>
     <script src="plate.js?v=23" defer></script>
   </head>
   <body>
@@ -70,8 +74,8 @@
 
         <div class="section-body about">
           <p class="lead">
-            Hi, I am Wenbo, a Postdoctoral Associate at the Broad Institute of MIT
-            and Harvard.
+            Hi, I am Wenbo Wang <span class="zh" lang="zh-Hans">(王文博)</span>, a
+            Postdoctoral Associate at the Broad Institute of MIT and Harvard.
           </p>
 
           <figure class="portrait">
@@ -673,27 +677,44 @@
         </header>
 
         <div class="section-body">
-          <ul class="emails">
-            <li><a href="mailto:wenbowang@g.harvard.edu">wenbowang@g.harvard.edu</a></li>
-            <li><a href="mailto:wenbowang1997@gmail.com">wenbowang1997@gmail.com</a></li>
-          </ul>
+          <div class="contact-card">
+            <span class="crop crop-tl" aria-hidden="true"></span>
+            <span class="crop crop-tr" aria-hidden="true"></span>
+            <span class="crop crop-bl" aria-hidden="true"></span>
+            <span class="crop crop-br" aria-hidden="true"></span>
 
-          <div class="contact-meta">
-            <div>
-              <h3 class="label">Affiliation</h3>
-              <p>
-                Wenbo Wang<br />
-                Postdoctoral Associate<br />
-                Broad Institute of MIT and Harvard
-              </p>
-            </div>
-            <div>
-              <h3 class="label">Elsewhere</h3>
-              <ul class="elsewhere">
-                <li><a href="https://scholar.google.com/citations?user=TIyfmcgAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar <span aria-hidden="true">↗</span></a></li>
-                <li><a href="https://www.linkedin.com/in/wenbo-wang-9042a213a/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></li>
-                <li><a href="https://github.com/ouma1997/" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a></li>
-              </ul>
+            <h3 class="label">Email</h3>
+            <ul class="emails">
+              <li>
+                <span class="label">Broad</span>
+                <a href="mailto:wenbo@broadinstitute.org">wenbo@broadinstitute.org</a>
+                <button class="copy label" type="button" data-copy="wenbo@broadinstitute.org">Copy</button>
+              </li>
+              <li>
+                <span class="label">Personal</span>
+                <a href="mailto:wenbowang1997@gmail.com">wenbowang1997@gmail.com</a>
+                <button class="copy label" type="button" data-copy="wenbowang1997@gmail.com">Copy</button>
+              </li>
+            </ul>
+
+            <div class="contact-meta">
+              <div>
+                <h3 class="label">Affiliation</h3>
+                <p>
+                  Wenbo Wang<br />
+                  Postdoctoral Associate<br />
+                  Broad Institute of MIT and Harvard
+                </p>
+              </div>
+              <div>
+                <h3 class="label">Elsewhere</h3>
+                <ul class="elsewhere">
+                  <li><a href="https://scholar.google.com/citations?user=TIyfmcgAAAAJ&amp;hl=en" target="_blank" rel="noreferrer"><span>Google Scholar</span><span class="arrow" aria-hidden="true">↗</span></a></li>
+                  <li><a href="https://orcid.org/0000-0002-4282-2542" target="_blank" rel="noreferrer"><span>ORCID</span><span class="handle">0000-0002-4282-2542</span><span class="arrow" aria-hidden="true">↗</span></a></li>
+                  <li><a href="https://www.linkedin.com/in/wenbo-wang-9042a213a/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="arrow" aria-hidden="true">↗</span></a></li>
+                  <li><a href="https://github.com/ouma1997/" target="_blank" rel="noreferrer"><span>GitHub</span><span class="handle">ouma1997</span><span class="arrow" aria-hidden="true">↗</span></a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -704,7 +725,6 @@
       <p class="signoff"><i class="seal" aria-hidden="true"></i>Wenbo <em>Wang</em></p>
       <div class="colophon-meta">
         <p>&copy; Wenbo Wang. All rights reserved.</p>
-        <p>Set in Newsreader &amp; IBM Plex Mono</p>
       </div>
     </footer>
 

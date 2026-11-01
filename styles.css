@@ -375,6 +375,12 @@ strong {
   gap: 56px clamp(32px, 4vw, 64px);
 }
 
+.zh {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
 .lead {
   grid-column: 1 / -1;
   max-width: 30em;
@@ -718,22 +724,39 @@ strong {
   color: var(--accent);
 }
 
-/* Contact */
+/* Contact: a correspondence card */
+.contact-card {
+  position: relative;
+  padding: clamp(28px, 3.5vw, 48px);
+  background: var(--plate);
+  outline: 1px solid var(--rule-strong);
+}
+
 .emails {
-  margin: 0;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.emails li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .emails a {
-  font-size: clamp(20px, 2.2vw, 30px);
-  font-weight: 460;
-  font-variation-settings: "opsz" 72;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
+  justify-self: start;
+  font-size: clamp(19px, 1.6vw, 22px);
+  font-weight: 520;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   text-decoration: none;
   overflow-wrap: anywhere;
-  background: linear-gradient(var(--accent), var(--accent)) 0 92% / 0 1px no-repeat;
+  background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 1px no-repeat;
   transition: color 0.2s ease, background-size 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -741,28 +764,69 @@ strong {
   background-size: 100% 1px;
 }
 
+.copy {
+  padding: 4px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy:hover,
+.copy.is-done {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .contact-meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 32px clamp(24px, 4vw, 64px);
-  margin-top: 64px;
-  padding-top: 16px;
-  border-top: 1px solid var(--ink);
+  margin-top: clamp(36px, 4vw, 52px);
 }
 
-.contact-meta p,
-.elsewhere {
-  margin-top: 10px;
+.contact-meta p {
+  margin-top: 12px;
+  line-height: 1.7;
   color: var(--ink-2);
 }
 
 .elsewhere {
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
+  border-top: 1px solid var(--ink);
 }
 
 .elsewhere a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
   text-decoration: none;
+  color: var(--ink);
+}
+
+.elsewhere .handle {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+.elsewhere .arrow {
+  grid-column: 3;
+  color: var(--ink-3);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.elsewhere a:hover .arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
 }
 
 /* Colophon */
@@ -1223,6 +1287,27 @@ strong {
 
   .contact-meta {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .emails li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+  }
+
+  .emails li > span.label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .emails li > .copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .emails a {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    overflow-wrap: normal;
   }
 }
 

@@ -95,3 +95,20 @@ viewer.addEventListener("click", (event) => {
     viewer.close();
   }
 });
+
+// Copy an email address to the clipboard
+document.querySelectorAll(".copy").forEach((button) => {
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.copy);
+    } catch {
+      return;
+    }
+    button.textContent = "Copied";
+    button.classList.add("is-done");
+    setTimeout(() => {
+      button.textContent = "Copy";
+      button.classList.remove("is-done");
+    }, 1600);
+  });
+});
