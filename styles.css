@@ -847,8 +847,71 @@ strong {
   border-top: 1px solid var(--rule);
 }
 
-.signoff {
+.colophon-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px 48px;
   margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+/* Affiliation marks, toned to the page and restored to color on hover */
+.affiliations {
+  display: grid;
+  justify-items: end;
+  gap: 14px;
+}
+
+.affiliations ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.affiliations li {
+  padding: 0 clamp(14px, 1.8vw, 24px);
+}
+
+.affiliations li:first-child {
+  padding-left: 0;
+}
+
+.affiliations li:last-child {
+  padding-right: 0;
+}
+
+.affiliations li + li {
+  border-left: 1px solid var(--rule);
+}
+
+.affiliations a {
+  display: block;
+}
+
+.affiliations img {
+  display: block;
+  width: auto;
+  filter: grayscale(1) sepia(0.25) contrast(1.05);
+  opacity: 0.72;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+.affiliations a:hover img,
+.affiliations a:focus-visible img {
+  filter: none;
+  opacity: 1;
+}
+
+.logo-shield { height: 40px; }
+.logo-wordmark { height: 26px; }
+.logo-mit { height: 24px; }
+.logo-seal { height: 42px; }
+
+.signoff {
+  margin: 0;
   font-size: clamp(30px, 3.6vw, 52px);
   font-weight: 540;
   font-variation-settings: "opsz" 72;
@@ -1217,6 +1280,19 @@ strong {
   body {
     font-size: 17px;
   }
+
+  .affiliations {
+    justify-items: start;
+  }
+
+  .affiliations li {
+    padding: 0 12px;
+  }
+
+  .logo-shield { height: 32px; }
+  .logo-wordmark { height: 20px; }
+  .logo-mit { height: 19px; }
+  .logo-seal { height: 34px; }
 
   .bio > div {
     grid-template-columns: minmax(0, 1fr);
