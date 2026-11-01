@@ -437,6 +437,13 @@ strong {
   margin: 0;
 }
 
+.bio-place {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 560;
+  color: var(--ink);
+}
+
 .bio dt {
   text-transform: none;
   letter-spacing: 0.04em;
