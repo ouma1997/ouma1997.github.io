@@ -11,18 +11,21 @@ const TRACE_LENGTH = 120;
 const SPIKE = [0.18, -1, -0.62, 0.32, 0.26, 0.12, 0.04];
 const SPIKE_SLOW = [0.1, -0.45, -0.75, -0.62, -0.3, 0.12, 0.24, 0.18, 0.08];
 const GENES = 10;
-const CYCLE = ["profile", "annotate", "record", "stimulate", "baseline", "illuminate", "postrecord"];
-const KIND = ["unlabeled", "cluster A", "marker+", "target+"];
-const PROFILES = [
-  [0.25, 0.2, 0.3, 0.15, 0.35, 0.3, 0.2, 0.25, 0.3, 0.2],
-  [0.9, 0.75, 0.85, 0.6, 0.2, 0.15, 0.1, 0.2, 0.35, 0.25],
-  [0.3, 0.25, 0.2, 0.2, 0.85, 0.7, 0.2, 0.15, 0.3, 0.25],
-  [0.2, 0.15, 0.25, 0.2, 0.25, 0.2, 0.9, 0.8, 0.3, 0.6],
+const CYCLE = ["profile", "annotate", "record", "stimulate", "annotate", "baseline", "illuminate", "postrecord"];
+// Five spatial domains (position and radius as fractions of the plate), each
+// with its own color and marker genes. Domain B hosts most targeted cells.
+const DOMAINS = [
+  { name: "A", x: 0.66, y: 0.34, r: 0.16, color: "#1f6b5a", genes: [0, 1] },
+  { name: "B", x: 0.25, y: 0.71, r: 0.15, color: "#a0661a", genes: [2, 3] },
+  { name: "C", x: 0.88, y: 0.62, r: 0.12, color: "#843f6e", genes: [4, 5] },
+  { name: "D", x: 0.45, y: 0.54, r: 0.11, color: "#5b6d1d", genes: [6, 7] },
+  { name: "E", x: 0.13, y: 0.4, r: 0.1, color: "#1c6784", genes: [8, 9] },
 ];
+const BASE_PROFILE = [0.25, 0.2, 0.3, 0.15, 0.3, 0.25, 0.2, 0.25, 0.3, 0.2];
 const LIGHT_MS = 5000;
 const STIM_MS = 1400;
 const ANNOTATE_MS = 2600;
-const ANNOTATION_LIFE = 90000;
+const ANNOTATION_LIFE = 150000;
 const COMPARE_MS = 12000;
 const SAMPLE_MS = 33.3;
 const TYPE_MS = 30;
@@ -54,7 +57,6 @@ class Plate {
       ink3: read("--ink-3", "#646a73"),
       plate: read("--plate", "#f8f9f9"),
       accent: read("--accent", "#c2352b"),
-      cell: read("--plate-cell", "#1f7a86"),
       light: read("--plate-light", "#4b5fe0"),
       polymer: read("--plate-polymer", "#222c63"),
     };
@@ -194,47 +196,43 @@ class Plate {
     this.base = Float64Array.from(pts.flat());
     this.points = Float64Array.from(this.base);
     this.phase = Float32Array.from({ length: n * 2 }, () => rand() * TAU);
-    this.kind = new Uint8Array(n);
+    this.domainOf = new Uint8Array(n);
+    this.isTagged = new Uint8Array(n);
     this.radius = new Float32Array(n);
     this.expr = new Float32Array(n * GENES);
     this.coat = new Float32Array(n);
     this.flashAt = new Float64Array(n).fill(-Infinity);
 
-    // Two spatial domains: a transcriptional cluster (A) and a region where a
-    // subset of cells is genetically targeted (B)
     const short = Math.min(W, H);
-    this.domains = [
-      { name: "A", x: 0.68 * W, y: 0.36 * H, r: 0.2 * short, cells: [] },
-      { name: "B", x: 0.27 * W, y: 0.74 * H, r: 0.17 * short, cells: [] },
-    ];
+    this.domains = DOMAINS.map((d) => ({ ...d, x: d.x * W, y: d.y * H, r: d.r * short, cells: [] }));
     const near = (d, x, y) => Math.exp(-((x - d.x) ** 2 + (y - d.y) ** 2) / (d.r * d.r));
     const dots = [];
     for (let i = 0; i < n; i++) {
       const [x, y] = pts[i];
-      const a = near(this.domains[0], x, y) + (rand() - 0.5) * 0.3;
-      const b = near(this.domains[1], x, y) + (rand() - 0.5) * 0.3;
-      let kind = 0;
-      if (a > 0.5) {
-        kind = 1;
-        this.domains[0].cells.push(i);
-      } else if (b > 0.38) {
-        kind = rand() < 0.62 ? 3 : 0;
-        this.domains[1].cells.push(i);
-      } else if (rand() < 0.05) {
-        kind = 2;
-      } else if (rand() < 0.025) {
-        kind = 3;
-      }
-      this.kind[i] = kind;
+      let k = -1;
+      let best = 0.48;
+      this.domains.forEach((d, j) => {
+        const g = near(d, x, y) + (rand() - 0.5) * 0.3;
+        if (g > best) {
+          best = g;
+          k = j;
+        }
+      });
+      if (k >= 0) this.domains[k].cells.push(i);
+      this.domainOf[i] = k + 1;
+      this.isTagged[i] = (k === 1 ? rand() < 0.62 : rand() < 0.02) ? 1 : 0;
       this.radius[i] = s * (0.07 + rand() * 0.035);
 
-      const profile = PROFILES[kind];
+      const marks = k >= 0 ? DOMAINS[k].genes : [];
       for (let g = 0; g < GENES; g++) {
-        this.expr[i * GENES + g] = Math.min(1, Math.max(0.04, profile[g] + (rand() - 0.5) * 0.3));
+        const high = marks.includes(g) ? 0.62 : 0;
+        const reporter = this.isTagged[i] && g === 9 ? 0.5 : 0;
+        const v = BASE_PROFILE[g] * (k >= 0 ? 0.7 : 1) + high + reporter + (rand() - 0.5) * 0.25;
+        this.expr[i * GENES + g] = Math.min(1, Math.max(0.04, v));
       }
 
-      const counts = [rand() < 0.35 ? 1 : 0, 3 + Math.floor(rand() * 3), 2 + Math.floor(rand() * 2), 1 + Math.floor(rand() * 2)];
-      for (let j = 0; j < counts[kind]; j++) {
+      const count = k >= 0 ? 3 + Math.floor(rand() * 3) : this.isTagged[i] ? 1 + Math.floor(rand() * 2) : rand() < 0.35 ? 1 : 0;
+      for (let j = 0; j < count; j++) {
         const angle = rand() * TAU;
         const r = s * (0.14 + rand() * 0.2);
         dots.push(i, Math.cos(angle) * r, Math.sin(angle) * r);
@@ -246,17 +244,17 @@ class Plate {
     this.tagged = [];
     for (let i = 0; i < n; i++) {
       if (inside(pts[i], W, H, 0.08)) this.interiorCells.push(i);
-      if (this.kind[i] === 3) this.tagged.push(i);
+      if (this.isTagged[i]) this.tagged.push(i);
     }
     const interior = new Set(this.interiorCells);
-    this.pools = {
-      a: this.domains[0].cells.filter((i) => interior.has(i)),
-      b: this.domains[1].cells.filter((i) => interior.has(i)),
-      tagged: this.tagged.filter((i) => interior.has(i)),
-    };
     this.domains.forEach((d) => {
+      d.pool = d.cells.filter((i) => interior.has(i));
       d.hull = this.hullOf(d.cells, s * 0.6);
     });
+    this.pools = {
+      domains: this.domains.flatMap((d) => d.pool),
+      tagged: this.tagged.filter((i) => interior.has(i)),
+    };
 
     this.delaunay = new this.Delaunay(this.points);
     this.voronoi = this.delaunay.voronoi(this.bounds);
@@ -313,7 +311,7 @@ class Plate {
     this.optoElectrode = this.electrode;
 
     // Start the probe on the domain-A cell nearest the domain's center
-    const pool = this.pools.a.length ? this.pools.a : this.interiorCells;
+    const pool = this.domains[0].pool.length ? this.domains[0].pool : this.interiorCells;
     let start = pool[0] ?? 0;
     let best = Infinity;
     for (const i of pool) {
@@ -395,7 +393,7 @@ class Plate {
     this.compare = { e, before, after, until: Infinity };
     this.log = this.log.slice(0, 1);
     this.note("PLAN", "map → annotate → perturb", 0);
-    this.note("ANNOTATE", `domain A · ${this.domains[0].cells.length} cells`, 0);
+    this.note("ANNOTATE", `${this.domains.length} domains`, 0);
     this.note("RECORD", `ch ${chId(e)} · baseline`, 0);
     this.note("ILLUMINATE", "light · target+ cells", 0);
     this.note("POLYMERIZE", cellCount(this.light.coated.size, "coated"), 0);
@@ -441,6 +439,12 @@ class Plate {
       shape.forEach((v, k) => (trace[start + k] += v * amp));
     }
     return { trace, count };
+  }
+
+  cellLabel(i) {
+    const k = this.domainOf[i];
+    const place = k ? `domain ${DOMAINS[k - 1].name}` : "unassigned";
+    return this.isTagged[i] ? `${place} · target+` : place;
   }
 
   note(verb, detail, now) {
@@ -539,7 +543,7 @@ class Plate {
     const task = { type, phase: "travel" };
     if (type === "profile") {
       const roll = Math.random();
-      const pool = roll < 0.45 ? this.pools.a : roll < 0.7 ? this.pools.b : this.interiorCells;
+      const pool = roll < 0.7 ? this.pools.domains : this.interiorCells;
       task.target = this.at(this.pick(pool.length ? pool : this.interiorCells));
     } else if (type === "annotate") {
       task.domain = this.domains[this.nextDomain];
@@ -567,7 +571,7 @@ class Plate {
       task.phase = "work";
       this.sense();
       if (task.type === "profile") {
-        this.note("PROFILE", `cell ${cellId(this.hi)} · ${KIND[this.kind[this.hi]]}`, now);
+        this.note("PROFILE", `cell ${cellId(this.hi)} · ${this.cellLabel(this.hi)}`, now);
         task.until = now + 4000;
       } else if (task.type === "annotate") {
         this.note("SEGMENT", `domain ${task.domain.name}`, now);
@@ -762,7 +766,7 @@ class Plate {
   }
 
   render(now) {
-    const { ctx, W, H, s, n, points, kind, color } = this;
+    const { ctx, W, H, s, n, points, color } = this;
     const voronoi = this.voronoi;
     const visible = (x, y) => x > -s && x < W + s && y > -s && y < H + s;
 
@@ -775,12 +779,10 @@ class Plate {
 
     // Cells, grouped into batched paths
     const membranes = new Path2D();
-    const clusterFill = new Path2D();
-    const markerFill = new Path2D();
-    const taggedFill = new Path2D();
+    const domainFill = DOMAINS.map(() => new Path2D());
     const nearFill = new Path2D();
     const nuclei = new Path2D();
-    const clusterNuclei = new Path2D();
+    const domainNuclei = DOMAINS.map(() => new Path2D());
     const taggedNuclei = new Path2D();
     const flash = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
     const coat = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
@@ -791,9 +793,8 @@ class Plate {
       const poly = voronoi.cellPolygon(i);
       if (!poly) continue;
       cellPath(membranes, poly, x, y);
-      if (kind[i] === 1) cellPath(clusterFill, poly, x, y);
-      else if (kind[i] === 2) cellPath(markerFill, poly, x, y);
-      else if (kind[i] === 3) cellPath(taggedFill, poly, x, y);
+      const k = this.domainOf[i];
+      if (k) cellPath(domainFill[k - 1], poly, x, y);
       if (near.has(i)) cellPath(nearFill, poly, x, y);
 
       const age = now - this.flashAt[i];
@@ -803,19 +804,16 @@ class Plate {
       if (this.coat[i] > 0.02) cellPath(coat[Math.min(3, Math.floor(this.coat[i] * 4))], poly, x, y);
 
       const r = this.radius[i];
-      const nucleus = kind[i] === 1 ? clusterNuclei : kind[i] === 3 ? taggedNuclei : nuclei;
+      const nucleus = this.isTagged[i] ? taggedNuclei : k ? domainNuclei[k - 1] : nuclei;
       nucleus.moveTo(x + r, y);
       nucleus.arc(x, y, r, 0, TAU);
     }
 
-    ctx.fillStyle = color.cell;
-    ctx.globalAlpha = 0.07;
-    ctx.fill(markerFill);
-    ctx.globalAlpha = 0.15;
-    ctx.fill(clusterFill);
-    ctx.fillStyle = color.light;
-    ctx.globalAlpha = 0.045;
-    ctx.fill(taggedFill);
+    ctx.globalAlpha = 0.24;
+    domainFill.forEach((path, j) => {
+      ctx.fillStyle = DOMAINS[j].color;
+      ctx.fill(path);
+    });
     ctx.fillStyle = color.ink;
     ctx.globalAlpha = 0.045;
     ctx.fill(nearFill);
@@ -874,26 +872,31 @@ class Plate {
     ctx.fillStyle = color.ink;
     ctx.globalAlpha = 0.4;
     ctx.fill(nuclei);
-    ctx.fillStyle = color.cell;
-    ctx.globalAlpha = 0.8;
-    ctx.fill(clusterNuclei);
+    ctx.globalAlpha = 0.9;
+    domainNuclei.forEach((path, j) => {
+      ctx.fillStyle = DOMAINS[j].color;
+      ctx.fill(path);
+    });
     ctx.fillStyle = color.light;
-    ctx.globalAlpha = 0.75;
+    ctx.globalAlpha = 0.9;
     ctx.fill(taggedNuclei);
 
-    // Transcript spots
-    const spots = new Path2D();
+    // Transcript spots, colored by domain
+    const spots = [new Path2D(), ...DOMAINS.map(() => new Path2D())];
     for (let j = 0; j < this.dots.length; j += 3) {
       const i = this.dots[j];
       const x = points[2 * i] + this.dots[j + 1];
       const y = points[2 * i + 1] + this.dots[j + 2];
       if (!visible(x, y)) continue;
-      spots.moveTo(x + 1, y);
-      spots.arc(x, y, 1, 0, TAU);
+      const path = spots[this.domainOf[i]];
+      path.moveTo(x + 1.1, y);
+      path.arc(x, y, 1.1, 0, TAU);
     }
-    ctx.fillStyle = color.cell;
-    ctx.globalAlpha = 0.9;
-    ctx.fill(spots);
+    spots.forEach((path, j) => {
+      ctx.fillStyle = j ? DOMAINS[j - 1].color : color.ink3;
+      ctx.globalAlpha = j ? 0.95 : 0.6;
+      ctx.fill(path);
+    });
 
     // Mesh electronics
     ctx.lineJoin = "round";
@@ -981,9 +984,9 @@ class Plate {
       const age = now - a.t;
       const progress = a.still ? 1 : Math.min(1, age / ANNOTATE_MS);
       const fade = a.still ? 1 : Math.min(1, (ANNOTATION_LIFE - age) / 3000);
-      ctx.strokeStyle = color.cell;
-      ctx.lineWidth = 1.2;
-      ctx.globalAlpha = 0.9 * fade;
+      ctx.strokeStyle = a.d.color;
+      ctx.lineWidth = 1.3;
+      ctx.globalAlpha = 0.95 * fade;
       ctx.setLineDash([5, 4]);
       drawPartial(ctx, hull, progress);
       ctx.setLineDash([]);
@@ -996,7 +999,7 @@ class Plate {
         ctx.fillStyle = color.plate;
         ctx.fillRect(lx, ly, lw, 17);
         ctx.globalAlpha = fade;
-        ctx.fillStyle = color.cell;
+        ctx.fillStyle = a.d.color;
         ctx.textBaseline = "middle";
         ctx.fillText(label, lx + 5, ly + 9);
       }
@@ -1133,7 +1136,7 @@ class Plate {
     ctx.fillText(`CELL ${cellId(this.hi)}`, x + 10, y + 17);
     ctx.textAlign = "right";
     ctx.fillStyle = color.ink3;
-    ctx.fillText(KIND[this.kind[this.hi]].toUpperCase(), x + pw - 10, y + 17);
+    ctx.fillText(this.cellLabel(this.hi).toUpperCase(), x + pw - 10, y + 17);
     ctx.textAlign = "left";
 
     const x0 = x + 56;
@@ -1141,7 +1144,8 @@ class Plate {
     ctx.fillStyle = color.ink3;
     ctx.fillText("RNA", x + 10, y + 52);
     const step = (x1 - x0) / GENES;
-    ctx.fillStyle = color.cell;
+    const k = this.domainOf[this.hi];
+    ctx.fillStyle = k ? DOMAINS[k - 1].color : color.ink3;
     for (let g = 0; g < GENES; g++) {
       const h = Math.max(1, this.bars[g] * 20);
       ctx.fillRect(x0 + g * step, y + 54 - h, step * 0.62, h);
